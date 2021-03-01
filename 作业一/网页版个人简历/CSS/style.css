@@ -1,0 +1,37 @@
+body {}
+
+h2 {font-size: 40px; font-family:Arial}
+
+/*定义表格总体格式*/
+.tableStyle {
+    border: 5px solid black;
+    padding: 10px;
+    border-spacing: 2px;
+    width: 800px;
+    height: 1100px;
+    background-color: aliceblue;
+}
+
+/*单元格样式*/
+td, th {
+    border: 1px solid black;
+    font-size: 20px;
+}
+
+/*数字类型单元格的子样式*/
+.numberStyle {
+    font-family: "Times New Roman";
+    text-align: center;
+}
+
+/*图片插入格式*/
+.IDPhotoStyle {
+    width: 140px;
+    height: 210px;
+    alignment: center;
+}
+
+/*td1 {*/
+/*    font-size: 20px;*/
+/*    text-align: center;*/
+/*}*/
