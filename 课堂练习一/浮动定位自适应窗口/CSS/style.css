@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+}
+
+.box1 {
+    float: left;
+    height: 80%;
+    width: 70%;
+    border: 2px solid black;
+
+}
+
+.box2 {
+    float: left;
+    height: 80%;
+    width: 30%;
+    border: 2px solid black;
+}
+
+.box3 {
+    float: left;
+    height: 20%;
+    width: 100%;
+    border: 2px solid black;
+}
+
+html, body{
+    height:100%
+}
