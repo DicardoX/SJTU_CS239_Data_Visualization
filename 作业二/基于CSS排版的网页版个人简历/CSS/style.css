@@ -1,0 +1,150 @@
+/*Style Design*/
+
+html, body {
+    height: 100%;
+    position: relative;
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    overflow: auto;
+}
+
+/*toolbar样式*/
+.canvasStyle {
+    position: absolute;
+    left: 10%;
+    top: 3%;
+    height: 3000px;
+    width: 80%;
+    border: 2px solid gray;
+
+    background-color: lightgray;
+    opacity: 0.93;
+}
+
+/*header样式*/
+.headerStyle {
+    position: absolute;
+    left: 10%;
+    top: 2%;
+    height: 5%;
+    width: 80%;
+    border: 2px solid black;
+    background-color: whitesmoke;
+
+    font-family: "Times New Roman";
+    font-size: 5vw;
+    /*文本在div内上下、左右居中对齐*/
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/*ID Photo样式*/
+.IDPhotoStyle {
+    position: absolute;
+    right: 10%;
+    top: 9%;
+    height: 10%;
+    width: 14%;
+    border: 1px solid black;
+}
+
+/*basic info样式*/
+.basicInfoStyle {
+    position: absolute;
+    left: 10%;
+    top: 9%;
+    height: 300px;
+    width: 65%;
+    border: 1px solid black;
+    background-color: whitesmoke;
+
+    font-size: 1.3vw;
+    /*边界填充*/
+    padding: 25px;
+    /*向内填充*/
+    box-sizing: border-box;
+}
+
+/*education样式*/
+.educationStyle {
+    position: absolute;
+    left: 10%;
+    top: 20%;
+    height: 300px;
+    width: 80%;
+    border: 1px solid black;
+    background-color: whitesmoke;
+}
+
+/*research experience样式*/
+.researchStyle {
+    position: absolute;
+    left: 10%;
+    top: 31%;
+    height: 600px;
+    width: 80%;
+    border: 1px solid black;
+    background-color: whitesmoke;
+}
+
+/*awards样式*/
+.awardsStyle {
+    position: absolute;
+    left: 10%;
+    top: 52%;
+    height: 300px;
+    width: 80%;
+    border: 1px solid black;
+    background-color: whitesmoke;
+}
+
+/*skills样式*/
+.skillStyle {
+    position: absolute;
+    left: 10%;
+    top: 63%;
+    height: 300px;
+    width: 80%;
+    border: 1px solid black;
+    background-color: whitesmoke;
+}
+
+/*横线*/
+.lineStyle {
+    position: absolute;
+    width: 94%;
+    height: 1px;
+    top: 16%;
+    left: 3%;
+    border: 1px solid black;
+    background-color: black;
+}
+
+/*子标题样式*/
+.subHeaderStyle {
+    position: absolute;
+    width: 80%;
+    height: 10%;
+    top: 3%;
+    left: 3%;
+
+    font-size: 1.3vw;
+}
+
+/*子列表样式*/
+.subListStyle {
+    position: absolute;
+    width: 94%;
+    height: 230px;
+    left: 3%;
+    top: 17%;
+
+    font-size: 1.3vw;
+    box-sizing: border-box;
+
+}
