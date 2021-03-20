@@ -1,0 +1,12 @@
+p {
+    position: relative;
+    left: 20px;
+    font-size: 10px;
+}
+
+button {
+    position: relative;
+    left: 20px;
+    margin-bottom: 20px;
+    font-size: 10px;
+}

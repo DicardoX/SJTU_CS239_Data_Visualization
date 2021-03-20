@@ -1,5 +1,7 @@
 # 数据可视化作业四：网站前后端基础
 
+[Ref](https://github.com/Yiyiyimu/SJTU-CS239-Visualization/tree/master/Week5/Better_version)
+
 ---------------
 
 ## 1. Flask基础知识
@@ -81,13 +83,84 @@ def index():
     return render_template("index.html", title = 'Home', user = user)     											#这里模块里的第一个user指的是html里面的变量user，而第二个user指的是函数index里面的变量user
 ```
 
+------
 
+### 1.4 app.route中的方法选项Method
+
+[python flask中HTTP方法methods=['GET','POST'] （概览）](https://blog.csdn.net/m0_38124502/article/details/78680498)
+
+[表单中method="post"什么意思？](https://zhidao.baidu.com/question/40070502.html)
+
+- 表单Form提供了两种数据传输的方式——get和post。虽然它们都是数据的提交方式，但是在实际传输时确有很大的不同，并且可能会对数据产生严重的影响。虽然为了方便的得到变量值，Web容器已经屏蔽了二者的一些差异，但是了解二者的差异在以后的编程也会很有帮助的。
+- Form中的get和post方法，在数据传输过程中分别对应了HTTP协议中的GET和POST方法。
+- **POST**：
+  - 从前端将数据发送到服务器（提交数据）
+  - 适合传输敏感数据，无数据量的限制
+  - 支持整个ISO10646字符集
+  - 表示客户端请求的时候还要提交数据，比如提交form表单，要提交的数据会放到请求报文的body部分
+- **GET**：
+  - 前端从服务器上获取数据（获取数据）
+  - **Get将表单中数据的按照variable=value的形式，添加到action所指向的URL后面，并且两者使用“?”连接，而各个变量之间使用“&”连接**
+  - 限制Form表单的数据集的值必须为ASCII字符
+- 二者在实现上的差异参见`../作业四/简单的前后端实例`中的`app.py`和`sort.js`分别实现的`postSort()`和`getSort()`函数
 
 -------
 
 
 
-## 2. 实践过程中遇到的问题
+## 2. AJAX基础知识
+
+[W3school：AJAX简介](https://www.w3school.com.cn/js/js_ajax_intro.asp)
+
+### 2.1 简介
+
+- **AJAX (Asynchronous JavaScript and XML) ，异步JS和XML**
+- 功能：
+  - 不刷新页面更新网页
+  - 在页面加载后从服务器请求数据
+  - 在页面加载后从服务器接收数据
+  - 在后台向服务器发送数据
+- **并非编程语言**！仅仅组合了二者：
+  - **浏览器内建的 XMLHttpRequest 对象**（从 web 服务器请求数据）
+  - JavaScript 和 HTML DOM（显示或使用数据）
+
+- Ajax 应用程序可能使用 XML 来传输数据，但将数据作为纯文本或 JSON 文本传输也同样常见(例如：.**py文件使用flask内的request.get_json()来获取POST请求参数（GET方法的类似函数有所不同）**，**.js文件内使用JSON.stringify和JSON.parse来进行json文件的生成或解析（返回文件为XMLHttpRequest.responseText）**)。
+- Ajax 允许通过与场景后面的 Web 服务器交换数据来异步更新网页。这意味着可以更新网页的部分，而不需要重新加载整个页面。
+- 工作模式图：
+
+<img src="./pic/ajax.gif" alt="avatar" style="zoom:100%;" />
+
+- **创建XMLHttpRequest 对象 **(Ajax的核心)：
+  - `var xhr = new XMLHttpRequest()`
+  - 对象方法：
+    - **abort()**：取消当前请求
+    - **getAllResponseHeaders()**：返回头部信息
+    - **getResponseHeader()**：返回特定的头部信息
+    - **open(method, url, async, user, password)**：规定请求
+    - **send()**：用于GET方法将请求发送到服务器
+    - **send(string)**：用于POST方法将请求发送到服务器
+    - **setRequesetHeader()**：向要发送的报头添加标签/值对
+  - 对象属性：
+    - **onreadystatechange**：定义当 readyState 属性发生变化时被调用的函数
+    - **readyState**：保存 XMLHttpRequest 的状态
+      - 0：请求未初始化
+      - 1：服务器连接已建立
+      - 2：请求已收到
+      - 3：正在处理请求
+      - 4：请求已完成且响应已就绪
+    - **responseText**：以字符串返回响应数据
+    - **responseXML**：以 XML 数据返回响应数据
+    - **status**：返回请求的状态号
+      - 200: "OK"
+      - 403: "Forbidden"
+      - 404: "Not Found"
+    - **statusText**：返回状态文本（比如 "OK" 或 "Not Found"）
+
+-------
+
+
+
+## 3. 实践过程中遇到的问题
 
 - 注意：在运行demo的时候发现render_template函数无法找到templates目录下的index.html，原因是**没有将templates认证为templates目录，pycharm中右键该目录选择`mark this folder as templates`即可**。
 - 在运行app.py时，发现并无网页窗口弹出，**需要点击输出中的网址 (Running on http://127.0.0.1:5000/) 才可进入正在运行后端程序的前端界面**，而不能直接点击打开html：
