@@ -1,0 +1,39 @@
+
+.tdStyle {
+    width: 10vw;
+    text-align: center;
+    background-color: whitesmoke;
+    border: 1px solid black;
+}
+
+body, div, p, ul, li, font, span, td, th {
+    font-size:10pt;
+    line-height:155%;
+}
+
+
+table {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 0px;
+    border-left-width: 1px;
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: none;
+    border-left-style: solid;
+    border-top-color: #CCCCCC;
+    border-right-color: #CCCCCC;
+    border-bottom-color: #CCCCCC;
+    border-left-color: #CCCCCC;
+}
+
+td {
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #CCCCCC;
+}
+
+.EditCell_TextBox {
+    width: 90%;
+    border:1px solid #0099CC;
+}

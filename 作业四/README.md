@@ -2,6 +2,11 @@
 
 [Ref](https://github.com/Yiyiyimu/SJTU-CS239-Visualization/tree/master/Week5/Better_version)
 
+- <font color=red>注意！每次修改完文件，重新运行app.py的时候，要cmd + shift + r强制刷新页面！不然会显示之前的东西</font>
+- 作业目标：文件操作和系统交互
+  - 从本地读取hotel.csv文件，使用表格展示在网页上
+  - 支持增加、删除、修改数据行，修改结果可保存在本地文件中
+
 ---------------
 
 ## 1. Flask基础知识
@@ -172,3 +177,23 @@ def index():
 **命令行运行app.py**：
 
 <img src="./pic/WechatIMG18.jpeg" alt="avatar " style="zoom:67%;" />
+
+- 实现表格内容的修改：注意row需要访问其cells，才是真正的行内容
+
+```
+//添加行
+function add_row(table, infoRow) {
+    // 创建行对象，从空白行克隆
+    let row = document.getElementById("emptyRow").cloneNode(true);
+    // 若infoRow不为0，说明是在初始化时导入原数据；否则为添加空白行
+    if (infoRow != null) {
+        for (let i = 1; i < row.cells.length; i++) {
+            row.cells[i].innerHTML = infoRow[i - 1];
+        }
+    }
+    table.tBodies[0].appendChild(row);          // 将该行加入表格对象的第一个表格的子对象（本例中仅一个表格）
+    SetRowCanEdit(row);                         // 设置为可编辑
+    return row;
+}
+```
+
