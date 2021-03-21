@@ -1,6 +1,6 @@
 # 数据可视化作业四：网站前后端基础
 
-[Ref](https://github.com/Yiyiyimu/SJTU-CS239-Visualization/tree/master/Week5/Better_version)
+[Html+js实现表格可编辑，并能动态添加删除行](https://blog.csdn.net/qqliang1314/article/details/41850919?utm_source=blogkpcl6)
 
 - <font color=red>注意！每次修改完文件，重新运行app.py的时候，要cmd + shift + r强制刷新页面！不然会显示之前的东西</font>
 - 作业目标：文件操作和系统交互
