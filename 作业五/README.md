@@ -15,6 +15,12 @@
 ## 1 可放缩矢量图形SVG (*Scalable Vector Graphics*)
 
 - SVG是一种在网页上呈现图像的方法。 SVG不是直接图像，而只是使用文本创建图像的一种方式。 顾名思义，它是一个**Scalable Vector** 。 它会根据浏览器的大小进行缩放，因此调整浏览器大小不会使图像失真。 除IE 8及更低版本外，所有浏览器均支持SVG。 数据可视化是可视化表示，使用SVG使用D3.js渲染可视化很方便。
+  - SVG是基于矢量的图像格式，它是基于文本的
+  - SVG在结构上与HTML类似
+  - SVG可以表示为**Document object model**
+  - 可以将SVG属性指定为属性
+  - SVG应该具有相对于原点（0,0）的绝对位置
+  - SVG可以包含在HTML文档中
 - 将SVG视为画布，我们可以在其上绘制不同的形状。 首先，让我们创建一个SVG标记：
 
 ```javascript
@@ -37,7 +43,140 @@
 </svg>
 ```
 
-------
+---------
+
+
+
+- **D3.js创建SVG的步骤**：
+
+  - Step 1. 创建一个容器来保存SVG图像：
+
+  ```javascript
+  <div id = "svgcontainer"></div>
+  ```
+
+  - Step 2. 使用select() 方法选中容器，并使用append() 方法注入SVG元素，再使用attr() 或者style() 的方法添加属性和样式，即设置幕布样式：
+
+  ```javascript
+  var width = 300;
+  var height = 300;
+  var svg = d3.select("#svgcontainer")
+     .append("svg").attr("width", width).attr("height", height);
+  ```
+
+  - Step 3. 再SVG元素中添加line等具体的图形元素：
+
+  ```javascript
+  svg.append("line")
+     .attr("x1", 100)
+     .attr("y1", 100)
+     .attr("x2", 200) 
+     .attr("y2", 200)
+     .style("stroke", "rgb(255,0,0)")
+     .style("stroke-width", 2);
+  ```
+
+  ​	除了**line**之外，还有**矩形元素rect**、**圆元素circle**、**椭圆元素ellipse**等
+
+----------
+
+
+
+- **SVG转换** (*SVG Transformation*)
+
+  - SVG引入了一个新属性， **transform**为支持转换。 可能的值是以下一项或多项
+    - **Translate** - 它有两个选项， **tx**沿x轴平移， **ty**沿y轴平移。 例如：transform (30 30)
+    - **Rotate** - 它有三个选项， **angle**指旋转角度， **cx**和**cy**指的是x和y轴旋转的中心。 如果未指定**cx**和**cy** ，则默认为坐标系的当前原点。 例如：rorate (60)
+    - **Scale** - 它有两个选项， **sx**沿x轴的比例因子， **sy**沿y轴的比例因子。 这里， **sy**是可选的，如果没有指定，则它取**sx**的值。 例如：scale (10)
+    - **Skew (SkewX and SkewY)** - 只需一个选项， **skew-angle**指的是SkewX沿x轴的角度和SkewY沿y轴的角度。 例如：skewx (20)
+
+  ```html
+  <html>
+     <head>
+        <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
+     </head>
+     <body>
+        <svg width = "300" height = "300">
+           <rect x = "20" 
+              y = "20"
+              width = "60"
+              height = "60"
+              fill = "green"
+              transform = "translate(30 30) rotate(45)">
+           </rect>
+        </svg>
+     </body>
+  </html>
+  ```
+
+  - 转换也可应用于**SVG组元素**，这使得能够转换SVG中定义的复杂图形：
+
+  ```html
+  <html>
+     <head>
+        <script type = "text/javascript" src = "https://d3js.org/d3.v4.min.js"></script>
+     </head>
+     <body>
+        <svg width = "300" height = "300">
+           <g transform = "translate(60,60) rotate(30)">
+              <rect x = "20" 
+                 y = "20" 
+                 width = "60" 
+                 height = "30" 
+                 fill = "green">
+              </rect>
+              <circle cx = "0" 
+                 cy = "0" 
+                 r = "30" 
+                 fill = "red"/>
+           </g>
+        </svg>
+     </body>
+  </html>
+  ```
+
+  ​	组元素可以如下定义：
+
+  ```javascript
+  var group = svg.append("g").attr("transform", "translate(60, 60) rotate(30)");
+  ```
+
+  ​	之后再创建SVG图形即可以通过以下方式将其附加到组中：
+
+  ```javascript
+  var rect = group
+     .append("rect")
+     .attr("x", 20)
+     .attr("y", 20)
+     .attr("width", 60)
+     .attr("height", 30)
+     .attr("fill", "green")
+  ```
+
+  - **D3变换库** (*D3 Transform Library*)
+
+    - D3.js提供了一个单独的库来管理转换，而无需手动创建转换属性。 它提供了处理所有类型转换的方法。 一些方法是**transform(), translate(), scale(), rotate()**等
+
+    ```html
+    <script src = "d3-transform.js"></script>
+    ```
+
+    - 转换代码可以写成：
+
+    ```javascript
+    var my_transform = d3Transform()
+       .translate([60, 60])
+       .rotate(30);
+    var group = svg
+       .append("g")
+       .attr("transform", my_transform);
+    ```
+
+    
+
+
+
+---------
 
 
 
@@ -187,11 +326,43 @@
   	.remove()
   ```
 
+  注意！要想删除特定一项，则必须要**添加一个update**：
+
+  ```javascript
+  // 数据动态删除
+  let p = d3.select("#list").selectAll("li");
+  let update = p.data([10, 20, 30, 15])
+  let exit = update.exit();
+  //update的部分的处理方法是修改内容
+  update.text( function(d){ return d; } );
+  //exit部分的处理方法是删除
+  exit.remove();
+  ```
+
+  
+
 - **数据连接的四种方法**：
+  
   - **datum()**：
     - 用于**为HTML文档中的单个元素设置值**。 一旦使用选择器选择元素，就会使用它。 例如，我们可以使用select（）方法选择现有元素（p标签），然后使用datum（）方法设置数据。 设置数据后，我们可以更改所选元素的文本或添加新元素，并使用datum（）方法设置的数据分配文本。
+  - **data()**：
+    - 用于将数据集分配给HTML文档中的元素集合。 使用选择器选择HTML元素后使用它。
+  - **enter()**：
+    - 输出之前没有图形元素的数据项集。 
+  - **exit()**：
+    - 输出不再存在数据的图形元素集。
+  
+- 在**Data join**的上下文中，它将匿名函数作为参数。 此匿名函数获取相应的数据和使用data()方法分配的数据集的索引。 因此，将为绑定到DOM的每个数据值调用此匿名函数。
 
+  ```javascript
+  .text(function (d, i) {
+  	console.log("d: " + d);
+  	console.log("i: " + i);
+  	console.log("this: " + this);
+  	return "The index is " + i + " and the data is " + d;
+  ```
 
+  在此函数中，我们可以应用任何逻辑来操作数据。 这些是匿名函数，意味着没有与函数关联的名称。 除了data (d) 和index (i) 参数之外，我们可以使用**this**关键字访问当前对象
 
 
 
