@@ -44,11 +44,156 @@
 ## 2 Selections in D3.js
 
 - 选择是D3.js的核心概念之一。 它基于CSS选择器。 它允许我们选择网页中的一个或多个元素。 此外，它允许我们修改，追加或删除与预定义数据集相关的元素。 在本章中，我们将了解如何使用选择来创建数据可视化。
+
 - D3.js有助于使用以下两种方法从HTML页面中选择元素：
+
   - **select()** - 通过匹配给定的CSS选择器，**仅选择一个DOM元素**。 如果给定的CSS选择器有多个元素，则仅选择第一个元素。
   - **selectAll()** - 通过匹配给定的CSS选择器来**选择所有DOM元素**。 如果您熟悉使用jQuery选择元素，则D3.js选择器几乎相同。
+
 - **select()方法**：
+
   - 可以通过html元素的标记、类名class和ID来访问元素
+
     - `d3.select("div")`为选择标记
+    - `d3.select(".myclass")`为选择类
     - `d3.select("#test")`为选择id
+
+  - **d3.select("div.myTest").append("span")**：在div标签内添加一个新的标签span
+
+  - **d3.select("div.myTest").append("span").text("from D3.js!")**：text（）方法用于设置所选/附加元素的内容
+
+    相同的脚本也可以在没有链语法的情况下访问：
+
+    ```javascript
+    var body = d3.select("div.myclass");
+    var span = body.append("span");
+    span.text("from D3.js");
+    ```
+
+- **selectAll()方法**：
+  - selectAll（）方法用于选择HTML文档中的多个元素。 select方法选择第一个元素，但selectAll方法选择与特定选择器字符串匹配的所有元素。 如果选择匹配none，则返回空选择。 我们也可以在selectAll（）方法中链接所有附加的修改方法， **append(), html(), text(), attr(), style(), classed(),**等。 在这种情况下，方法将影响所有匹配元素。
+  - 修改元素的方法将影响到所有被选中的元素。
+
+-------
+
+
+
+## 3 D3.js 修改元素
+
+- D3.js提供了各种方法来修改所选元素的内容和样式
+
+- **html()方法**：
+
+  - 用于设置所选/附加元素的html内容
+
+- **attr()方法**：
+
+  - 用于添加或更新所选元素的属性
+
+    ```javascript
+    d3.select("div.myTest").attr("style", "color: red");
+    ```
+
+- **style()方法**：
+
+  - 用于添加或更新所选元素的样式
+
+    ```javascript
+    d3.select("div.myTest").style("color", "red");
+    ```
+
+- **classed()方法**：
+
+  - 专门用于设置HTML元素的“class”属性。 因为，单个HTML元素可以有多个类; 在为HTML元素分配类时，我们需要小心。 此方法知道如何处理元素上的一个或多个类，并且它将具有高性能。
+
+  - **Add class** - 要添加类，必须将分类方法的第二个参数设置为true：
+
+    ```javascript
+    d3.select(".myclass").classed("myanotherclass", true);
+    ```
+
+  - **Remove class** - 要删除类，必须将分类方法的第二个参数设置为false：
+
+    ```javascript
+    d3.select(".myclass").classed("myanotherclass", false);
+    ```
+
+  - **Check class** - 要检查是否存在类，只需省略第二个参数并传递要查询的类名。 如果存在则返回true，否则返回false：
+
+    ```javascript
+    d3.select(".myclass").classed("myanotherclass");
+    ```
+
+-----
+
+
+
+## 4 数据连接
+
+- 数据连接是D3.js中的另一个重要概念。 它与选择一起使用，使我们能够根据我们的数据集（一系列数值）操作HTML文档。 默认情况下，D3.js在其方法中为数据集提供最高优先级，并且数据集中的每个项对应于HTML元素。
+
+- 数据连接使我们能够根据现有HTML文档中的数据集注入，修改和删除元素（HTML元素以及嵌入的SVG元素）。 默认情况下，数据集中的每个数据项对应于文档中的元素（图形）。
+
+- 数据连接的主要目的是使用给定的数据集映射现有文档的元素。 它根据给定的数据集创建文档的虚拟表示，并提供使用虚拟表示的方法。 让我们考虑一个简单的数据集：
+
+  ```
+  [10, 20, 30, 25, 15]
+  ```
+
+  **数据集有五个项目，因此可以映射到文档的五个元素。 让我们使用选择器的selectAll（）方法和数据连接的data（）方法将它映射到以下文档的**`li`**元素**。
+
+  在html中创建如下列表框架：
+
+  ```html
+  <ul id = "list">
+  	<li></li>
+    <li></li>
+  </ul>
+  ```
+
+  在js中添加如下语句：
+
+  ```javascript
+  // 测试d3的数据连接功能
+  d3.select("#list").selectAll("li")
+    .data([10, 20, 30, 25, 15])
+   	.text(function (d){return d;});
+  ```
+
+  即可实现数据连接。text（）方法中的函数用于获取**li**元素映射数据。这里， **d**表示第一个**li**元素为10，第二个**li**元素为20。
+
+  接下来的三个元素可以映射到任何元素，可以使用**数据连接的enter()**和**selector的append()**方法完成。 
+
+  - **enter()方法**
+    - 提供对**剩余所有数据**的访问（未映射到现有元素）
+  - **append()方法**
+    - 用于从相应数据创建新元素
+
+  ```javascript
+  d3.select("#list").selectAll("li")
+    .data([10, 20, 30, 25, 15])
+    .text(function (d){return "This is pre-existing element and the value is " + d;})
+    .enter()
+    .append("li")
+    .text(function (d){return "This is dynamically created element and the value is " + d;})
+  ```
+
+  若想要删除相应的元素，可以使用 **exit()**和**remove()**方法来处理从数据集中动态删除的数据项，此为删除了最后一项
+
+  ```javascript
+  d3.select("#list").selectAll("li")
+   	.data([10, 20, 30, 25])
+    .exit()
+  	.remove()
+  ```
+
+- **数据连接的四种方法**：
+  - **datum()**：
+    - 用于**为HTML文档中的单个元素设置值**。 一旦使用选择器选择元素，就会使用它。 例如，我们可以使用select（）方法选择现有元素（p标签），然后使用datum（）方法设置数据。 设置数据后，我们可以更改所选元素的文本或添加新元素，并使用datum（）方法设置的数据分配文本。
+
+
+
+
+
+
 
