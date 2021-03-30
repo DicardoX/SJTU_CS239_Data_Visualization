@@ -257,7 +257,7 @@
     d3.select(".myclass").classed("myanotherclass", false);
     ```
 
-  - **Check class** - 要检查是否存在类，只需省略第二个参数并传递要查询的类名。 如果存在则返回true，否则返回false：
+  - **Check class** - 要检查是否存在类，只需省略第二个参数并传递要查询的类名。 如果存在则返回false，否则返回true：
 
     ```javascript
     d3.select(".myclass").classed("myanotherclass");
@@ -363,6 +363,36 @@
   ```
 
   在此函数中，我们可以应用任何逻辑来操作数据。 这些是匿名函数，意味着没有与函数关联的名称。 除了data (d) 和index (i) 参数之外，我们可以使用**this**关键字访问当前对象
+
+------
+
+
+
+## 5 相关事项
+
+- 设置点击单元格变色：
+
+```javascript
+// 获取列号 + 改变选择单元格的背景颜色
+function get_column_index(table, index) {
+    console.log(index)
+    column_index = index;
+    let unit = table.rows[0].cells[index];
+    unit.style.backgroundColor = "grey";
+}
+
+// 恢复单元格的背景颜色
+function recover_unit_color(table, index) {
+    let unit = table.rows[0].cells[index];
+    unit.style.backgroundColor = "whitesmoke";
+}
+```
+
+在HTML中需要设置相应可能的单元格为：
+
+```html
+onmousedown="get_column_index(document.getElementById('tabProduct'), 1)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 1)"
+```
 
 
 
