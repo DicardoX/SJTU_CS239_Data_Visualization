@@ -39,25 +39,6 @@ function plot_histogram(table) {
     // console.log(dataset)
     // console.log(d3.max(dataset))
 
-    // 绘制矩形
-    svg.selectAll("rect")
-        .data(dataset)
-        .enter()
-        .append("rect")
-        .attr("x", function (d, i) { return (i + 1.6) * (width / (dataset.length + 2)); })
-        .attr("y", function (d) { return (height - (d / d3.max(dataset)) * (13 / 15) * height) - (height / 15); })
-        .attr("width", (width / (dataset.length + 2)) * 0.8)
-        .attr("height", function (d) { return (d / d3.max(dataset)) * (13 / 15) * height; })
-        .attr("fill", function (d, i) { return 'rgba(160, 102, 211)'; })
-        .on("mouseover", function (d) {
-            d3.select(this)
-                .attr("fill", function (d, i) { return 'rgba(65, 105, 225)'; });
-        })
-        .on("mouseout", function (d) {
-            d3.select(this)
-                .attr("fill", function (d, i) { return 'rgba(160, 102, 211)'; });
-        });
-
     // x坐标轴设置
     // 比例尺
     let x_scale = d3.scaleLinear()
@@ -87,6 +68,30 @@ function plot_histogram(table) {
         .attr("class", "y_axis")
         .attr('transform', `translate(${(width / (dataset.length + 2))}, 0)`)           // 访问变量
         .call(y_axis);
+
+    // 绘制矩形
+    let histogram = svg.selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("x", function (d, i) { return (i + 1.6) * (width / (dataset.length + 2)); })
+        .attr("y", function (d) { return height * (14 / 15); })
+        .attr("width", (width / (dataset.length + 2)) * 0.8)
+        .attr("height", 0)
+        .attr("fill", function (d, i) { return 'rgba(160, 102, 211)'; })
+        .on("mouseover", function (d) {
+            d3.select(this)
+                .attr("fill", function (d, i) { return 'rgba(65, 105, 225)'; });
+        })
+        .on("mouseout", function (d) {
+            d3.select(this)
+                .attr("fill", function (d, i) { return 'rgba(160, 102, 211)'; });
+        })
+        .transition()               // 动画效果
+        .duration(1000)
+        .ease(d3.easeCubicInOut)
+        .attr("height", function (d) { return Math.abs((d / d3.max(dataset)) * (13 / 15) * height); })
+        .attr("y", function (d) { return height - (d / d3.max(dataset)) * (13 / 15) * height - (height / 15); });
 
     // 绘制折线
     // 重新构造数据数组
@@ -118,6 +123,7 @@ function plot_histogram(table) {
         .attr("fill", "white")
         .attr("stroke", function (d, i) { return 'rgba(128, 42, 42)'; })
         .attr("stroke-width", 1.5);
+
     // 创建表格名称
     let cur_text = table.rows[0].cells[column_index].innerHTML;
     // console.log(cur_text);

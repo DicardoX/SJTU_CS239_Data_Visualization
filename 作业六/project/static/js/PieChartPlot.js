@@ -4,6 +4,26 @@
 // 当前选择的月份
 let date_index = 9;
 
+// 查询第一个选中的行号
+function update_date_index(table) {
+    // 遍历所有行，查看哪一行被选中
+    for (let i = 1; i < table.rows.length; i++) {
+        let chk_order = table.rows[i].cells[0].firstChild;
+        if (chk_order && chk_order.type === "checkbox" && chk_order.checked) {
+            date_index = i - 1;
+            return;
+        }
+    }
+
+    for(let i = table.rows.length - 1; i > 0; i--) {
+        let chkOrder = table.rows[i].cells[0].firstChild;
+        if(chkOrder && chkOrder.type === "checkbox" && chkOrder.checked) {
+            //执行删除
+            table.deleteRow(i);
+        }
+    }
+}
+
 function plot_pie_chart(table) {
     // 删除旧的SVG，若无svg，selectAll()方法会创建一个空选择集并返回
     if (!d3.select("body").selectAll("svg").filter(".myPieChartSVG").empty()) {
@@ -55,6 +75,10 @@ function plot_pie_chart(table) {
         }
     }
 
+    // 更新当前选中的月份
+    update_date_index(table);
+    console.log("Date index: " + date_index);
+
     // 根据当前选中的月份重新构造输入
     let ori_data = [];
     for (let i = 0; i < amount; i++) {
@@ -72,14 +96,14 @@ function plot_pie_chart(table) {
     let arc = d3.arc()
         .innerRadius(50)
         .cornerRadius(10);
-    // 饼图与文字相连的曲线起点
-    let start_point = d3.arc()
-        .innerRadius(radius + 20)
-        .outerRadius(radius + 20);
-    //饼图与文字相连的曲线终点
-    let end_point = d3.arc()
-      .innerRadius(radius + 20)
-      .outerRadius(radius + 20)
+    // // 饼图与文字相连的曲线起点
+    // let start_point = d3.arc()
+    //     .innerRadius(radius + 20)
+    //     .outerRadius(radius + 20);
+    // //饼图与文字相连的曲线终点
+    // let end_point = d3.arc()
+    //   .innerRadius(radius + 20)
+    //   .outerRadius(radius + 20)
 
     // 绘制用的数据，以及相关基础的设置（如每个值对应的角度等）
     let draw_data = d3.pie()
@@ -113,16 +137,12 @@ function plot_pie_chart(table) {
         .on("mouseover", arcTween(radius + 20, 0))
         .on("mouseout", arcTween(radius, 150))
         .transition()
-        .duration(2000)
+        .duration(1500)
         .attrTween("d", function (d) {
             //初始加载时的过渡效果
             let fn = d3.interpolate({endAngle: d.startAngle}, d)
             return function(t) { return arc(fn(t)) }
         })
-
-
-    // console.log(dataset)
-    // console.log(d3.max(dataset))
 
     // 设置缓动函数,为鼠标事件使用
     function arcTween(outerRadius, delay) {
@@ -134,39 +154,8 @@ function plot_pie_chart(table) {
                     let i = d3.interpolate(d.outerRadius, outerRadius)
                     return function(t) { d.outerRadius = i(t); return arc(d) }
                 });
-
-            console.log(subPart);
-
-            // subPart.append("g")
-            //     .append("text")
-            //     .text(function (d) {console.log(d.data.key); return d.data.key})
-            //     .attr("transform", `translate(30, 0)`)
-            //     .style("font-size", "1vm")
-            //     .attr("y", "1em")
-            //     .attr("x", "3em")
-            //     .attr("dy", 3)
         }
     }
-
-    // 文字
-
-
-    // 文字层
-    // let sum = d3.sum(ori_data, d => d.value);
-    // svg.append("g")
-    //     .attr("transform", `translate(${radius}, ${radius})`)
-    //     .selectAll("text")
-    //     .data(draw_data)
-    //     .enter()
-    //     .append("text")
-    //     .attr("transform", function (d) {
-    //         // arc.centroid(d)将文字平移到弧的中心
-    //         // rotate 使文字旋转扇形夹角一半的位置(也可不旋转)
-    //         return `translate(${arc.centroid(d)}) rotate(${-90 + (d.startAngle + (d.endAngle - d.startAngle) / 2) * 180 / Math.PI})`
-    //     })
-    //     .attr("text-anchor", "middle")          // 文字居中显示
-    //     .attr("font-size", "10px")
-    //     .text(function (d) { return (d.data.value / sum * 100).toFixed(2) + "%"; })             // 格式化文字显示格式
 
     // 图例，容器
     let legend = pie_chart.append("g")
@@ -190,5 +179,16 @@ function plot_pie_chart(table) {
         .attr("y", "1em")
         .attr("x", "3em")
         .attr("dy", 3)
+
+    // 创建表格名称
+    let cur_text = "Guests Sources Distribution in Date " + (date_index + 1).toString();
+    console.log(cur_text);
+    svg.append("text")
+        .text(cur_text)
+        .style("font-size", "1vw")
+        .attr("x", (width / 2))
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle")
+        .attr("y", (height / 12));
 
 }

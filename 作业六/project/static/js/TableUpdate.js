@@ -83,6 +83,7 @@ function table_init(table) {
 function update_hotel_info(table) {
     // 获取列形式的表格数据
     let ret = get_table_data(table);
+
     // 生成请求对象
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/update_hotel_info", true);
@@ -118,23 +119,6 @@ function update_hotel_info(table) {
             // Do nothing
         }
     }
-}
-
-// 获取表格数据，转化为列形式
-function get_table_data(table) {
-    // 容器定义
-    let ret = [];
-    for (let j = 1; j < table.getElementsByTagName("tr")[0].cells.length; j++) {
-        ret[j - 1] = [];
-    }
-    // 转化为列的形式
-    for (let i = 1; i < table.getElementsByTagName("tr").length; i++) {
-        for (let j = 1; j < table.getElementsByTagName("tr")[i].cells.length; j++) {
-            // 读取表格单元格数据
-            ret[j - 1][i - 1] = table.getElementsByTagName("tr")[i].cells[j].innerHTML;
-        }
-    }
-    return ret;
 }
 
 // 针对多个表格

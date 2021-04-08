@@ -72,7 +72,7 @@
         <input type="button" name="clear" value="Clear" onclick="window.location.reload()" />
 <!--        这里的return false非常重要！！不然会method not found-->
         <input type="submit" name="submit" value="Submit" onclick="update_hotel_info(document.getElementById('tabProduct'));return false;" />
-        <input type="button" name="plot" value="Plot" onclick="plot_all_graphs(document.getElementById('tabProduct'))" />
+        <input type="button" name="plot" value="Plot" onclick="plot_all_graphs(document.getElementById('tabProduct')); return false;" />
     </div>
 </form>
 
