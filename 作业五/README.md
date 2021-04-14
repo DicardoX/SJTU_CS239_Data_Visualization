@@ -394,7 +394,61 @@ function recover_unit_color(table, index) {
 onmousedown="get_column_index(document.getElementById('tabProduct'), 1)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 1)"
 ```
 
+- ***d3.js* 中的比例尺**：
 
+  [d3.js中的各种比例尺](https://segmentfault.com/a/1190000011006780)
+
+  - *d3.scaleLinear()*：线性比例尺。相当于将 *domain* 中的数据集映射到 *range* 中
+
+  ```javascript
+  let scale = d3.scaleLinear().domain([1,5]).range([0,100])
+  ```
+
+  - *d3.scaleBand()*：半序数比例尺。*domain* 中可以是一个离散的数组，但 *range()* 中需要是一个连续域
+
+  ```javascript
+  let scale = d3.scaleBand().domain([1,2,3,4]).range([0,100])
+  ```
+
+  <img src="./cut/Snip20170830_1.png" alt="avatar" style="zoom:100%;" />
+
+  - *d3.scaleOrdinal()*：全序数比例尺。*domain* 和 *range* 都使用离散的数据
+
+  ```javascript
+  let scale = d3.scaleOrdinal().domain(['jack', 'rose', 'john']).range([10, 20, 30])
+  ```
+
+  <img src="./cut/截屏2021-04-14 上午12.18.36.png" alt="avatar" style="zoom:40%;" />
+
+  - *d3.scaleQuantize()*：量化比例尺。定义域 *domain* 是连续的，输出域 *range* 是离散的
+  
+  ```javascript
+  let scale = d3.scaleQuantize().domain([0, 10]).range(['small', 'medium', 'long'])
+  ```
+  
+  <img src="./cut/截屏2021-04-14 上午8.21.37.png" alt="avatar" style="zoom:40%;" />
+  
+  - *d3.scaleTime()*：时间比例尺。类似于线性比例尺，输入域变成了一个时间轴。
+  
+  ```javascript
+  let scale = d3.scaleTime()
+                .domain([new Date(2017, 0, 1, 0), new Date(2017, 0, 1, 2)])
+                .range([0,100])
+  ```
+  
+  - *d3.schemeCategory10* 等：颜色比例尺。
+  
+  ```javascript
+  d3.schemeCategory10
+  d3.schemeCategory20
+  d3.schemeCategory20b
+  d3.schemeCategory20c
+  
+  // 定义一个序数颜色比例尺
+  let color = d3.scaleOrdinal(d3.schemeCategory10)
+  ```
+  
+  
 
 
 

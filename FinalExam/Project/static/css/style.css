@@ -1,0 +1,67 @@
+html, body {
+    height: 100%;
+}
+
+.tdStyle {
+    position: relative;
+    /*width: 5vw;*/
+    height: 2vw;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: whitesmoke;
+    border: 1px solid black;
+}
+
+body, div, p, ul, li, font, span, td, th {
+    font-size:0.7vw;
+    /*line-height:155%;*/
+}
+
+
+table {
+    position: relative;
+    /*表格在页面整体居中*/
+    text-align: center;
+    margin: auto;
+    /*固定单元格宽度，防止内容过长导致单元格宽度改变，强制换行*/
+    table-layout: fixed;
+    word-break: break-all;
+    /*word-wrap: break-word;*/
+    /*margin-top: 1vw;*/
+    /*margin-left: 1vw;*/
+    width: 90%;
+    /*height: 30vw;*/
+}
+
+.EditCell_TextBox {
+    width: 90%;
+    border:1px solid #0099CC;
+}
+
+.myHistogramSVG {
+    position: relative;
+    margin-top: 1vw;
+    margin-left: 10vw;
+    background-color: white;
+    font-family: "American Typewriter";
+}
+
+.myChoiceStyle {
+    position: relative;
+    margin-top: 2vw;
+    text-align: center;
+
+}
+
+.type_name_legend {
+    /*position: relative;*/
+    /*表格在页面整体居中*/
+    text-align: center;
+    margin: auto;
+    /*固定单元格宽度，防止内容过长导致单元格宽度改变，强制换行*/
+    word-break: break-all;
+}
+
+.month_legend {
+
+}
