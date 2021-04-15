@@ -210,7 +210,7 @@
     ```
 
 - **selectAll()方法**：
-  - selectAll（）方法用于选择HTML文档中的多个元素。 select方法选择第一个元素，但selectAll方法选择与特定选择器字符串匹配的所有元素。 如果选择匹配none，则返回空选择。 我们也可以在selectAll（）方法中链接所有附加的修改方法， **append(), html(), text(), attr(), style(), classed(),**等。 在这种情况下，方法将影响所有匹配元素。
+  - selectAll（）方法用于选择HTML文档中的多个元素。 select方法选择第一个元素，但selectAll方法选择与特定选择器字符串匹配的所有元素。 如果选择匹配none，则 *selectAll()* 方法会创建一个空选择集并返回。 我们也可以在 *selectAll()* 方法中链接所有附加的修改方法， **append(), html(), text(), attr(), style(), classed(),**等。 在这种情况下，方法将影响所有匹配元素。
   - 修改元素的方法将影响到所有被选中的元素。
 
 -------
@@ -257,7 +257,7 @@
     d3.select(".myclass").classed("myanotherclass", false);
     ```
 
-  - **Check class** - 要检查是否存在类，只需省略第二个参数并传递要查询的类名。 如果存在则返回false，否则返回true：
+  - **Check class** - 要检查是否存在类，只需省略第二个参数并传递要查询的类名。 如果存在则返回true，否则返回false：
 
     ```javascript
     d3.select(".myclass").classed("myanotherclass");

@@ -67,21 +67,21 @@
 
     <br />
     <div style="text-align: center">
-        <input type="button" name="add" value="Add" onclick="add_row(document.getElementById('tabProduct'), null)" />
-        <input type="button" name="delete" value="Delete" onclick="delete_row(document.getElementById('tabProduct'))" />
-        <input type="button" name="clear" value="Clear" onclick="window.location.reload()" />
-<!--        这里的return false非常重要！！不然会method not found-->
-        <input type="submit" name="submit" value="Submit" onclick="update_hotel_info(document.getElementById('tabProduct'));return false;" />
-        <input type="button" name="plot" value="Plot" onclick="plot_all_graphs(document.getElementById('tabProduct')); return false;" />
+<!--        <input type="button" name="add" value="Add" onclick="add_row(document.getElementById('tabProduct'), null)" />-->
+<!--        <input type="button" name="delete" value="Delete" onclick="delete_row(document.getElementById('tabProduct'))" />-->
+<!--        <input type="button" name="clear" value="Clear" onclick="window.location.reload()" />-->
+<!--&lt;!&ndash;        这里的return false非常重要！！不然会method not found&ndash;&gt;-->
+<!--        <input type="submit" name="submit" value="Submit" onclick="update_hotel_info(document.getElementById('tabProduct'));return false;" />-->
+<!--        <input type="button" name="plot" value="Plot" onclick="plot_all_graphs(document.getElementById('tabProduct')); return false;" />-->
     </div>
 
     <div class="myChoiceStyle">
-        <input type="button" name="area" value="Area" onclick="choose_data_type(document.getElementById('tabProduct'), 0)" />
-        <input type="button" name="group" value="Group" onclick="choose_data_type(document.getElementById('tabProduct'), 1)" />
-        <input type="button" name="reservation" value="Reservation" onclick="choose_data_type(document.getElementById('tabProduct'), 2)" />
-        <input type="button" name="age" value="Client's Age" onclick="choose_data_type(document.getElementById('tabProduct'), 3)" />
-        <input type="button" name="gender" value="Gender" onclick="choose_data_type(document.getElementById('tabProduct'), 4)" />
-        <input type="button" name="occupancy" value="Occupancy" onclick="choose_data_type(document.getElementById('tabProduct'), 5)" />
+        <input type="button" id="area_button" name="area" value="Area" onclick="choose_data_type(document.getElementById('tabProduct'), 0)" />
+        <input type="button" id="group_button" name="group" value="Group" onclick="choose_data_type(document.getElementById('tabProduct'), 1)" />
+        <input type="button" id="reservation_button" name="reservation" value="Reservation" onclick="choose_data_type(document.getElementById('tabProduct'), 2)" />
+        <input type="button" id="age_button" name="age" value="Client's Age" onclick="choose_data_type(document.getElementById('tabProduct'), 3)" />
+        <input type="button" id="gender_button" name="gender" value="Gender" onclick="choose_data_type(document.getElementById('tabProduct'), 4)" />
+        <input type="button" id="occupancy_button" name="occupancy" value="Occupancy" onclick="choose_data_type(document.getElementById('tabProduct'), 5)" />
     </div>
 </form>
 
@@ -103,9 +103,15 @@
         let tabProduct = document.getElementById("tabProduct");
         // update_hotel_info(tabProduct);
         table_init(tabProduct);
-        // // 设置表格可编辑
+        // 设置表格可编辑
         EditTables(tabProduct);
-    
+
+        // 等待与后端数据传输完毕
+        setTimeout(function () {
+            // 默认选中第一个按钮
+            choose_data_type(tabProduct, 0);
+        }, 100);
+
     </script>
 
 

@@ -6,6 +6,68 @@ let type_index = 0;
 // 类名列表
 let type_name_list = [];
 
+// 根据选中的type_index改变或恢复button的底色
+function change_button_color() {
+    switch (type_index) {
+        case 0:
+            // Area
+            document.getElementById("area_button").style.backgroundColor = "grey";
+            document.getElementById("group_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("reservation_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("age_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("gender_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("occupancy_button").style.backgroundColor = "whitesmoke";
+            break;
+        case 1:
+            // Group
+            document.getElementById("area_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("group_button").style.backgroundColor = "grey";
+            document.getElementById("reservation_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("age_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("gender_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("occupancy_button").style.backgroundColor = "whitesmoke";
+            break;
+        case 2:
+            // Reservation
+            document.getElementById("area_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("group_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("reservation_button").style.backgroundColor = "grey";
+            document.getElementById("age_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("gender_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("occupancy_button").style.backgroundColor = "whitesmoke";
+            break;
+        case 3:
+            // Client's age
+            document.getElementById("area_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("group_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("reservation_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("age_button").style.backgroundColor = "grey";
+            document.getElementById("gender_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("occupancy_button").style.backgroundColor = "whitesmoke";
+            break;
+        case 4:
+            // Gender
+            document.getElementById("area_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("group_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("reservation_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("age_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("gender_button").style.backgroundColor = "grey";
+            document.getElementById("occupancy_button").style.backgroundColor = "whitesmoke";
+            break;
+        case 5:
+            // Occupancy
+            document.getElementById("area_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("group_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("reservation_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("age_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("gender_button").style.backgroundColor = "whitesmoke";
+            document.getElementById("occupancy_button").style.backgroundColor = "grey";
+            break;
+        default:
+            break;
+    }
+}
+
 // 选择要展示哪一类数据
 // index = 0: Area; 1: Group; 2: Reservation; 3: Client's age; 4: Gender; 5: Occupancy
 function choose_data_type(table, index) {
@@ -51,11 +113,15 @@ function choose_data_type(table, index) {
             break;
     }
 
+    // 根据type_index改变button的颜色
+    // console.log("Change button color...");
+    change_button_color();
     // Plot
+    // console.log("Plot...");
     plot_histogram(table);
 }
 
-// 根据选择的类别生成相应的数据集
+// 根据选择type_index生成相应的部分数据集
 function generate_dataset(ori_dataset) {
     let ret = [];
     let idx = 0;
@@ -139,7 +205,7 @@ function plot_histogram(table) {
     // 删除旧的SVG，若无svg，selectAll()方法会创建一个空选择集并返回
     if (!d3.select("body").selectAll("svg").filter(".myHistogramSVG").empty()) {
         d3.select("body").selectAll("svg").filter(".myHistogramSVG").remove();
-        console.log("Remove histogram...");
+        console.log("Reconstructing histogram...");
     }
 
     // 设置幕布尺寸
@@ -167,13 +233,13 @@ function plot_histogram(table) {
             }
         }
     }
-    console.log(ori_dataset)
+    // console.log(ori_dataset)
     // console.log(d3.max(dataset))
 
     // 根据选择的类别生成相应的数据集
     let dataset = generate_dataset(ori_dataset);
 
-    console.log(dataset)
+    // console.log(dataset)
 
     // 颜色块设置
     let color_scale = d3.scaleOrdinal()
@@ -218,41 +284,77 @@ function plot_histogram(table) {
     let histogram = svg.selectAll("rect");
 
     for (let j = 0; j < dataset.length; j++) {
-        console.log(j);
+        let cur_i = 0;
         // 绘制矩形
         histogram.data(dataset[j])
             .enter()
             .append("rect")
-            .attr("x", function (d, i) { return (i + 1.6) * (width / (dataset[0].length + 5)); })
+            .attr("x", function (d, i) {
+                cur_i = i;
+                return (i + 1.6) * (width / (dataset[0].length + 5));
+            })
             .attr("y", function (d) { return height * (14 / 15); })
             .attr("width", (width / (dataset[0].length + 5)) * 0.8)
             .attr("height", 0)
             .attr("fill", function (d, i) { return color_scale(j); })
+            .attr("id", function (d, i) { return (j * dataset[0].length + i).toString(); })
             .on("mouseover", function (d) {
                 d3.select(this)
-                    .attr("fill", function (d, i) { return 'rgba(65, 105, 225)'; });
+                    // .attr("fill", function (d) {
+                    //     return 'rgba(65, 105, 225)';
+                    // })
+                    .attr("fill", "grey")
+                // 设置相应提示框的不透明度
+                // console.log(this.id);
+                document.getElementById("tips" + this.id).style.opacity = "1.0";
             })
             .on("mouseout", function (d) {
                 d3.select(this)
                     .attr("fill", function (d, i) { return color_scale(j); });
+                // 恢复相应提示框为透明状态
+                // console.log(this.id);
+                document.getElementById("tips" + this.id).style.opacity = "0.0";
             })
             .transition()               // 动画效果
             .duration(1000)
             .ease(d3.easeCubicInOut)
             .attr("height", function (d, i) {
+                prev_sum[i] = cur_sum[i];
                 cur_sum[i] += d;
-                console.log(cur_sum[i]);
                 return Math.abs((d / 100) * (13 / 15) * height);
             })
             // .attr("height", function (d) { return Math.abs((d / d3.max(dataset)) * (13 / 15) * height); })
             .attr("y", function (d, i) {
-                let ret = height - ((d + prev_sum[i]) / 100) * (13 / 15) * height - (height / 15);
-                prev_sum[i] = cur_sum[i];
-                return ret;
+                return height - ((d + prev_sum[i]) / 100) * (13 / 15) * height - (height / 15);
             });
             // .attr("y", function (d) { return height - (d / d3.max(dataset)) * (13 / 15) * height - (height / 15); });
-        console.log(cur_sum);
-        console.log(prev_sum);
+
+        // console.log(cur_sum);
+        // console.log(prev_sum);
+    }
+
+    // 绘制提示框
+    let tip_prev_sum = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let tip_cur_sum = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (let j = 0; j < dataset.length; j++) {
+        for (let i = 0; i < dataset[0].length; i++) {
+            tip_prev_sum[i] = tip_cur_sum[i];
+            tip_cur_sum[i] += dataset[j][i];
+            svg.append("text")
+                .text(function (d) {
+                    return (dataset[j][i]) + "%";
+                })
+                .attr("id", function (d) { return "tips" + (j * dataset[0].length + i).toString(); })
+                .style("font-size", 13)
+                .attr("x", function (d) {
+                    return (i + 2) * (width / (dataset[0].length + 5));
+                })
+                .attr("y", function (d) {
+                    return height - ((dataset[j][i] + tip_prev_sum[i]) / 100) * (13 / 15) * height - (height / 15);
+                })
+                // 默认为透明状态
+                .style("opacity", 0.0);
+        }
     }
 
     // 图例，容器
@@ -271,6 +373,34 @@ function plot_histogram(table) {
         .attr("height", height / 20)
         // .attr("fill", function (d) {return color_scale(d.index)});
         .attr("fill", function (d, i) {return color_scale(i)});
+
+    // 绘制折线
+    // 重新构造数据数组
+    let new_dataset = new Array(dataset[0].length - 1);
+    for (let i = 0; i < new_dataset.length; i++) {
+        new_dataset[i] = [];
+        new_dataset[i].push(dataset[0][i]);
+        new_dataset[i].push(dataset[0][i + 1]);
+    }
+
+    // console.log("New Dataset:");
+    // console.log(new_dataset);
+
+    // 绘制线段
+    for(let i = 0; i < new_dataset.length; i++) {
+
+        svg.append("line")
+            .attr("x1",  (i + 2) * (width / (new_dataset.length + 6)))
+            .attr("x2", (i + 3) * (width / (new_dataset.length + 6)))
+            .attr("y1", function (d) { return height * (14 / 15); })
+            .attr("y2", function (d) { return height * (14 / 15); })
+            .transition()               // 动画效果
+            .duration(1000)
+            .attr("y1", (height - (new_dataset[i][0] / 100) * (13 / 15) * height) - (height / 15))
+            .attr("y2", (height - (new_dataset[i][1] / 100) * (13 / 15) * height) - (height / 15))
+            .attr("stroke", "black")
+            .attr("stroke-width", 2);
+    }
 
     // 图例中的文字
     legend.append("text")
