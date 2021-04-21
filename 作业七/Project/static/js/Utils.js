@@ -18,19 +18,6 @@ function recover_unit_color(table, index) {
     unit.style.backgroundColor = "whitesmoke";
 }
 
-// 绘制所有类别的图表
-function plot_all_graphs(table) {
-    // 删除旧的SVG
-    // d3.select("body").selectAll("svg").remove();
-
-    // 绘制柱状图 & 折线图
-    plot_histogram(table);
-    // 绘制饼图
-    plot_pie_chart(table);
-    // 绘制热点图
-    plot_heatmap(table);
-}
-
 // 获取表格数据，转化为列形式
 function get_table_data(table) {
     // 容器定义
@@ -56,13 +43,17 @@ function search_rank_pos(elm, arr) {
     for (let i = 0; i < arr.length; i++) {
         tmp_arr.push(arr[i]);
     }
+
+    // 注意，这里不能直接.sort()
     tmp_arr.sort(function(a, b) {return a - b});
 
-    // console.log(tmp_arr);
 
     for (let i = 0; i < tmp_arr.length; i++) {
         if (tmp_arr[i] === elm) {
             return i;
+        }
+        if (tmp_arr[i] > elm) {
+            return i - 1;
         }
     }
     console.log("error elm: " + elm.toString());

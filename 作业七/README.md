@@ -93,3 +93,19 @@ pie_chart.call(drag);
 
   - *Brush*：区域选中效果，常用于平行坐标、散点图、折线图的数据筛选。
 
+- ***Java Script* 的数字数组排序**：
+
+  ```javascript
+  tmp_arr.sort(function(a, b) {return a - b});
+  ```
+
+  注意：直接 *.sort()* 会将 *12* 排在 *4* 前面！
+
+
+-----
+
+
+
+## 1 基于可视化数据的发现
+
+- 本地居民
