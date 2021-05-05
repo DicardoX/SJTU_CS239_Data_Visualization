@@ -1,0 +1,120 @@
+{
+  "name": "@dataVTest.xcy/dataVTest",
+  "version": "0.0.1",
+  "dependencies": {
+   	"bcore": "0.0.18",
+   	"datav-g2plot-adaptor": "^2.3.18",
+    "jquery": "2.1.4",
+    "lodash": "4.6.1"
+  },
+  "datav": {
+    "cn_name": "dataVTest",
+    "icon": "",
+    "protocol": 2,
+    "type": [
+      "regular"
+    ],
+    "view": {
+      "width": "800",
+      "height": "400",
+      "minWidth": "200",
+      "minHeight": "100"
+    },
+    "apis": {
+      "source": {
+        "handler": "render",
+        "description": "接口描述",
+        "fields": {
+          "value": {
+            "description": "值说明"
+          }
+        }
+      }
+    },
+    "config": {
+      "options": {
+        "name": "菜单",
+        "type": "menu",
+        "children": {
+          "graph": {
+            "name": "图形",
+            "children": {
+              "size": {
+                "name": "气泡大小",
+                "type": "slider",
+                "step": 1,
+                "default": 4,
+                "min": 0,
+                "max": 50,
+                "suffix": "px"
+              },
+
+              "color": {
+                "name": "气泡颜色",
+                "type": "fill",
+                "default": "#2483ff"
+              }, 
+
+              "stroke": {
+                "name": "气泡描边",
+                "type": "group",
+                "fold": false,
+                "children": {
+                  "lineDash": {
+                    "name": "线型",
+                    "type": "select",
+                    "default": "实线",
+                    "options": [
+                      {
+                        "value": [10,0],
+                        "label": "实线"
+                      },
+                      {
+                        "value": [1,1],
+                        "label": "虚线"
+                      },
+                      {
+                        "value": [0.01,100],
+                        "label": "无描边"
+                      }
+                    ]
+                  },
+
+                  "lineWidth": {
+                    "type": "stepper",
+                    "name": "粗细",
+                    "default": 1,
+                    "suffix": "px",
+                    "step": 1,
+                    "min": 1,
+                    "max": 50
+                  },
+
+                  "lineColor": {
+                    "name": "颜色",
+                    "type": "fill",
+                    "default": "#fff"
+                  }
+                }
+              }
+            }
+          },
+
+          "others": {
+            "name": "其他",
+            "children": {
+            }
+          }
+        }
+      }
+
+    },
+
+    "api_data": {
+      	"source": {
+        	"type": "api",
+        	"api": "https://datav.oss-cn-hangzhou.aliyuncs.com/uploads/mock-data/ted_com.json"
+      	}
+    }
+  }
+}
