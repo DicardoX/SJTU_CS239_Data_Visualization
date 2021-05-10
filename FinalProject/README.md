@@ -24,7 +24,25 @@
 
 ## 1. 基于 *Flask* 框架 的 *Python* 后端实现
 
-### 1.1 百度地图 *API* 的调用
+### 1.1 City Based Dataset
+
+- `./city_location_hash_table/hash_table.csv`：从 *location* 到 *city name* 的哈希映射
+  - 格式为：
+    - *City_name_1: [lat1, lon1], [lat2, lon2], ...*
+    - *City_name_2: [lat1, lon1], [lat2, lon2], ...*
+    - *...*
+- `./city_central_location/central_location.csv`：所研究城市对应的中心 *location*，由所有位于该城市的 *location* 平均得到
+  - 格式为：
+    - *City_name_1: avg_lat, avg_lon*
+    - *City_name_2: avg_lat, avg_lon*
+    - *...*
+- `./city_features/city_features.csv`：所研究城市每日各自对应的平均 *features* ，共 *1492* 天
+  - 格式为：
+    - *City_name_1: [features1], [features2], ...*
+    - *City_name_2: [features1], [features2], ...*
+    - *...*
+
+### 1.2 百度地图 *API* 的调用
 
 - 进入 [百度地图开放平台](https://lbsyun.baidu.com/apiconsole/key#/home) 官网，申请账号并进入控制台，创建应用，应用类型选择“服务端”，启用服务默认，请求校验方式选择 ***sn* 校验方式**，并记录 *sk*
 
@@ -119,5 +137,8 @@
     		print("Traversed locations:", str(i) + "/" + str(len(locations_vectors)))
     ```
 
-  - 
+
+------
+
+
 

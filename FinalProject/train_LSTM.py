@@ -21,6 +21,10 @@ def get_input(year, month):
     print(locations_vectors[0])
 
 
+# Train based on city name
+
+
+
 def main():
     # Get dataset
     get_input(2013, 1)
