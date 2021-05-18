@@ -1,4 +1,4 @@
-# ChinaVis 2021数据可视化竞赛
+#  ChinaVis 2021数据可视化竞赛
 
 #### Course Project of 2021 SJTU CS239 Data Visualization
 
@@ -16,7 +16,7 @@
   - 大气环境的改善：利用可视分析技术，展示大气污染治理过程中的大气环境状况、评估大气污染防治措施。
   - 自选主题，提炼分析需求，设置分析问题，并提供解决方案。
 
-- **艺术可视化赛道，主题为“你我呼吸的空气”**，具体要求请移步艺术竞赛征稿通知主题2（http://chinavisap.net/comp-call-for-entries.html）。
+- **艺术可视化赛道，主题为“你我呼吸的空气”**，具体要求请移步艺术竞赛征稿通知主题2（http://chinavisap.net/comp-call-for-entries.html）。 
 
 -----
 
@@ -38,7 +38,7 @@
     - *City_name_1: avg_lat, avg_lon*
     - *City_name_2: avg_lat, avg_lon*
     - *...*
-- `./city_features/city_features.csv`：所研究城市每日各自对应的平均 *features* ，共 *1492* 天
+- `./city_features/city_features.csv`：所研究城市每日各自对应的平均 *features* ，共 *2191* 天
   - 格式为：
     - *City_name_1: [features1], [features2], ...*
     - *City_name_2: [features1], [features2], ...*
@@ -142,5 +142,102 @@
 
 ------
 
+### 1.3 *MySQl* 数据库
 
+[手把手教你MAC本地数据库的安装与使用【三】：用已有数据文件建表](https://zhuanlan.zhihu.com/p/128943329)
+
+[Mac如何通过命令行Mysql操作数据库](https://blog.csdn.net/Nick_YangXiaoTong/article/details/80877566)
+
+- 使用方式：
+
+    - 使用 *Anaconda* 创建名为 `mysqlTest` 的虚拟环境 (可选)
+    - 进入该虚拟环境后，使用 `touch .sql_bash_profile` 创建属于 *sql* 的专属环境配置文件
+    - 使用 `open -e ~/.sql_bash_profile ` 用文本编辑器打开配置文件，并添加如下环境变量：
+
+    ```shell
+    export PATH=${PATH}:/usr/local/mysql/bin
+    ```
+
+    - 退出编辑，使用 `source .sql_bash_profile` 启用该配置文件
+
+    - 使用命令 `mysql -u root -p `，输入密码后进入到 *sql* 模式
+
+    - 设置导入数据的选项：`SET GLOBAL local_infile=1;`，然后输入 `\q` 后回车退出 *mysql*
+
+    - 重新用以下语句连接：
+
+        ```shell
+        mysql --local-infile=1 -u root -p
+        ```
+
+    - 数据库的查看、创建和删除：
+
+        - 查看：`show databases;`
+        - 创建：`create database ChinaVis;`
+        - 删除：`drop database ChinaVis;`
+    
+    - 数据库的使用：
+    
+        - 进入：`use ChinaVis;`
+        
+        - 查看表：`show tables;`
+        
+        - 查看表结构：`desc tablename;`
+        
+        - 表内容查询：`select * from central_location where CITY_NAME = "北京市";`
+        
+            ​					   `select * from central_location where LAT > 40.0;`
+        
+            - 注意，若日期保存为 `str` 格式 `2013_01_01`，则查询时要加 `''`：
+                - `select * from city_features where DATE = '2013_01_13';`
+    
+- *python* 代码：
+
+    - 表的创建：
+
+    ```python
+    # 在database中创建table
+    def create_table(my_table_name, info_dict):
+        # 使用 execute() 方法执行 SQL，如果表存在则删除
+        cursor.execute("DROP TABLE IF EXISTS %s" % my_table_name)
+    
+        sql = ""
+    
+        if my_table_name == "central_location":
+            # 使用预处理语句创建表
+            sql = """CREATE TABLE %s(
+                     CITY_NAME CHAR(20) NOT NULL,
+                     LAT FLOAT,
+                     LON FLOAT)""" % my_table_name
+        # elif my_table_name == "city_features":
+    
+        # Execute
+        cursor.execute(sql)
+    ```
+
+    - 表内容的插入：
+
+    ```python
+    # 在database的某个table中插入内容, info_dict = {"北京市": [lat, lon], ...}
+    def insert_content_in_table(my_table_name, info_dict):
+        if my_table_name == "central_location":
+            for key in info_dict.keys():
+                # SQL 插入语句
+                sql = """INSERT INTO %s(CITY_NAME,
+                             LAT, LON) VALUES ('""" % my_table_name + key + """', %.2f, %.2f)""" % (info_dict[key][0], info_dict[key][1])
+    
+                try:
+                    # 执行sql语句
+                    cursor.execute(sql)
+                    # 提交到数据库执行
+                    db_connection.commit()
+                except:
+                    # 如果发生错误则回滚
+                    print("Error occurred when inserting table...")
+                    db_connection.rollback()
+    ```
+
+    ​		注意，*sql* 插入语句中的字符串都要加上单引号：`'大庆市'`。
+
+    - 调用函数必须位于同一个 `.py` 文件内，否则 `execute` 时会报错。
 

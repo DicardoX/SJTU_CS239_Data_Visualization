@@ -9,7 +9,9 @@ import pandas as pd
 import socket
 import time
 import os
-import math
+
+from Utils.get_csv_input import get_csv_input
+from Utils.calculate_AQI import calculate_AQI
 
 # Cancel scientific counting
 np.set_printoptions(suppress=True)
@@ -169,7 +171,7 @@ def get_central_location_of_city():
     df.fillna(0, inplace=True)
     # Traverse all rows
     for i in range(df.shape[0]):
-        # # Get city name
+        # Get city name
         city_name = df.loc[i].values[0]
         locations_list = list(df.loc[i].values[1: len(df.loc[i].values)])
         # Remove all 0
@@ -194,7 +196,7 @@ def get_central_location_of_city():
     new_df.to_csv(new_csv_path, encoding="utf_8_sig")
 
 
-# Generate city based dataset
+# Generate city based dataset: features
 def generate_city_dataset():
     # City-location hash table
     hash_table = {}
@@ -215,7 +217,7 @@ def generate_city_dataset():
         hash_table[city_name] = locations_list
 
     # Date range
-    years = [2013, 2014, 2015, 2016, 2017]
+    years = [2013, 2014, 2015, 2016, 2017, 2018]
     months = [i + 1 for i in range(12)]
 
     avg_city_features_dict = {}
@@ -225,13 +227,12 @@ def generate_city_dataset():
 
     # Traverse the npy files
     for year in years:
-        if year == 2017:
-            # Only Jan.
-            dir_path = "./dataset/features/" + str(year) + "_" + str(1).zfill(2)
+        for month in months:
+            dir_path = "./dataset/features/" + str(year) + "_" + str(month).zfill(2)
             days = [i + 1 for i in range(len(os.listdir(dir_path)))]
             for day in days:
-                print("Traverse in", str(year) + ",", str(1).zfill(2) + ",", str(day).zfill(2), "...")
-                locations_features_dict = get_input(2017, 1, day, 1)
+                print("Traverse in", str(year) + ",", str(month).zfill(2) + ",", str(day).zfill(2), "...")
+                locations_features_dict = get_input(year, month, day, 1)
 
                 # Traverse hash_table
                 for city_name in hash_table.keys():
@@ -254,36 +255,6 @@ def generate_city_dataset():
                             avg_city_features_dict[city_name][counter][i]
                             / len(hash_table[city_name]), 2)
                 counter += 1
-        # Not year 2017
-        else:
-            for month in months:
-                dir_path = "./dataset/features/" + str(year) + "_" + str(month).zfill(2)
-                days = [i + 1 for i in range(len(os.listdir(dir_path)))]
-                for day in days:
-                    print("Traverse in", str(year) + ",", str(month).zfill(2) + ",", str(day).zfill(2), "...")
-                    locations_features_dict = get_input(year, month, day, 1)
-
-                    # Traverse hash_table
-                    for city_name in hash_table.keys():
-                        for location in hash_table[city_name]:
-                            features = locations_features_dict[location]
-                            # If not found this city_name in avg_city_features_dict
-                            if city_name not in avg_city_features_dict.keys():
-                                avg_city_features_dict[city_name] = []
-                            else:
-                                if len(avg_city_features_dict[
-                                           city_name]) == counter + 1:  # Already update at least once
-                                    for i in range(0, len(features)):
-                                        avg_city_features_dict[city_name][counter][i] += features[i]
-                                else:
-                                    avg_city_features_dict[city_name].append(features)
-                    # Average
-                    for city_name in avg_city_features_dict.keys():
-                        for i in range(len(avg_city_features_dict[city_name][counter])):
-                            avg_city_features_dict[city_name][counter][i] = round(
-                                avg_city_features_dict[city_name][counter][i]
-                                / len(hash_table[city_name]), 2)
-                    counter += 1
 
     # Write to csv file by pd.to_csv(), encoding with "utf_8_sig" to save Chinese correctly
     new_df = pd.DataFrame.from_dict(avg_city_features_dict,
@@ -294,6 +265,28 @@ def generate_city_dataset():
     return
 
 
+# Generate city based AQI
+def generate_city_based_AQI():
+    print("Generating city based AQI...")
+    city_AQI_dict = {}
+
+    # Get input
+    features_dict = get_csv_input("city_features.csv")
+
+    # Traverse cities
+    for key in features_dict.keys():
+        city_name = key
+        features_vectors_list = features_dict[city_name]
+        city_AQI_dict[city_name] = []
+        for i in range(len(features_vectors_list)):
+            AQI = round(calculate_AQI(features_vectors_list[i][0:6]), 2)
+            city_AQI_dict[city_name].append(AQI)
+
+    # Write to csv file by pd.to_csv(), encoding with "utf_8_sig" to save Chinese correctly
+    new_df = pd.DataFrame.from_dict(city_AQI_dict, orient='index')
+    new_df.to_csv('./city_based_dataset/city_based_AQI/city_based_AQI.csv', encoding="utf_8_sig")
+
+
 if __name__ == '__main__':
     # # Generate city list (from locations to city) based on observed_city_list
     # # Call for Baidu Map API
@@ -302,5 +295,11 @@ if __name__ == '__main__':
     # # Get central location of cities
     # get_central_location_of_city()
 
-    # Generate city based dataset
-    generate_city_dataset()
+    # Generate city based dataset: features
+    # generate_city_dataset()
+
+    # Generate city based AQI
+    generate_city_based_AQI()
+
+
+
