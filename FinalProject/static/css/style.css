@@ -1,7 +1,13 @@
 html, body {
     height: 100%;
 }
+.BMap_cpyCtrl {
+    display:none;
+}
 
+.anchorBL{
+    display:none;
+}
 .tdStyle {
     position: relative;
     /*width: 5vw;*/
@@ -93,6 +99,78 @@ table {
     font-family: "American Typewriter";
 }
 
+#provinceContainer {
+    /*display: inline;*/
+    margin-top: 50px;
+    width: 800px;
+    height: 800px;
+    position: relative;
+    /*margin-top: 5vw;*/
+    /*margin-left: 5vw;*/
+    background-color: white;
+    font-family: "American Typewriter";
+}
+
+#cityInProvinceContainer {
+    /*display: inline;*/
+    position: relative;
+    width: 500px;
+    height: 500px;
+    /*margin-top: 5vw;*/
+    /*margin-left: 5vw;*/
+    background-color: white;
+    font-family: "American Typewriter";
+}
+
+#trylineCharts {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    /*margin-top: 5vw;*/
+    /*margin-left: 5vw;*/
+    background-color: white;
+    font-family: "American Typewriter";
+}
+
+#tryRadarCharts {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    /*margin-top: 5vw;*/
+    /*margin-left: 5vw;*/
+    background-color: white;
+    font-family: "American Typewriter";
+}
+
+#tryTempLineChart {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    /*margin-top: 5vw;*/
+    /*margin-left: 5vw;*/
+    background-color: white;
+    font-family: "American Typewriter";
+}
+
+#tryWindRose {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    /*margin-top: 5vw;*/
+    /*margin-left: 5vw;*/
+    background-color: white;
+    font-family: "American Typewriter";
+}
+
+#province_3D {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    /*margin-top: 5vw;*/
+    /*margin-left: 5vw;*/
+    background-color: white;
+    font-family: "American Typewriter";
+}
 
 .mySeasonChoiceStyle {
     position: relative;

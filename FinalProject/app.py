@@ -72,6 +72,9 @@ def update_table(table):
     ret.to_csv(r"./output.csv")
 
 
+
+
+
 @app.route('/table_init', methods=['POST'])
 @app.route('/update_hotel_info', methods=['POST'])
 def update_hotel_info():

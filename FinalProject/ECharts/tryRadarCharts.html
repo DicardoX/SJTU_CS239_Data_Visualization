@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/echarts@5.1.1/dist/echarts.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+    </head>
+    <body>
+        <div id="main" style="width: 1000px; height: 800px;"></div>
+        <script>
+            
+            var chartDom = document.getElementById('main');
+            var myChart = echarts.init(chartDom);
+            var option;
+            var dateStart = 2090;
+            var dateEnd = 2110;
+            
+            var syData;
+            d3.csv("http://localhost:99//syData.csv",function(csvdata){
+                return csvdata;
+                }).then(function (data) {
+                    syData = data;
+                    option = {
+                        title:{
+                            text: 'SaYan Pollution Radar Chart',
+                            top: 10,
+                            left: 10
+                        },
+                        tooltip:{
+                            trigger: 'item'
+                        },
+                        legend:{
+                            type: 'scroll',
+                            bottom: 10,
+                            data: (function (){
+                                var list = [];
+                                for (var i = dateStart; i <=dateEnd; i++) {
+                                    list.push(i + '');
+                                }
+                                return list;
+                            })()
+                        },
+                        radar: {
+                            indicator: [
+                                { text: 'CO', max: 150},
+                                { text: 'O3', max: 60},
+                                { text: 'PM2.5', max: 50},
+                                { text: 'PM10', max: 12},
+                                { text: 'SO2', max: 12},
+                                { text: 'NO2', max: 1}
+                            ]
+                        },
+                        series: (function (){
+                            var series = [];
+                            for (var i = dateStart; i <= dateEnd; i++) {
+                                var r = 250*(i-dateStart)/(dateEnd-dateStart);
+                                //var g = 250*(i-dateStart)/(dateEnd-dateStart);
+                                //var b = 250*(i-dateStart)/(dateEnd-dateStart);
+                                series.push({
+                                    name: 'pollution data',
+                                    type: 'radar',
+                                    symbol: 'none',
+                                    lineStyle: {
+                                        width: 3,
+                                        color: 'rgba('+r+',0,0,0.7)'
+                                    },
+                                    emphasis: {
+                                        areaStyle: {
+                                            color: 'rgba(0,250,0,0.3)'
+                                        }
+                                    },
+                                    data: [{
+                                        value: [
+                                            syData[i]['CO'],
+                                            syData[i]['O3'],
+                                            syData[i]['PM2.5'],
+                                            syData[i]['PM10'],
+                                            syData[i]['SO2'],
+                                            syData[i]['NO2']
+                                        ],
+                                        name: i + ''
+                                    }]
+                                });
+                            }
+                            return series;
+                        })()
+                    };
+                    option && myChart.setOption(option);
+                });
+        </script>
+    </body>
+</html>
