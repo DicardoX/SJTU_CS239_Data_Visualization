@@ -22,15 +22,15 @@ batch_size = 16
 # Learning rate
 lr = 0.0001
 # Dropout rate
-dropout_rate = 0.5
+dropout_rate = 0.3
 # Num of features
 n_features = 11
 # Num of time steps in a sample
 n_steps = 7
 # Amount of test samples
-n_test_samples = 365
+n_test_samples = 100
 # Total epochs for training
-total_epochs = 300
+total_epochs = 100
 
 
 # Get dataset of csv file

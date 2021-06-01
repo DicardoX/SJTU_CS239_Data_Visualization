@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel Data Visualization</title>
+    <!-- js library -->
+    <script src="../static/JSLib/jquery.min.js"></script>
+    <script type="text/javascript" src="../static/JSLib/echarts.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../static/JSLib/bmap.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../static/JSLib/d3.min.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=Ci4oiZl2xcGHhBW1qn8SaguSoDaG9jGQ"></script>
+    <!-- css library -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- css -->
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+<label for="meeting">选择日期：</label><input id="meeting" type="date" min="2013-01-01" max="2018-12-31" value="2013-01-01"/>
+<select id="datatype">
+    <option value="PM2.5">PM2.5</option>
+    <option value="PM10">PM10</option>
+    <option value="O3">O3</option>
+    <option value="CO">CO</option>
+    <option value="SO2">SO2</option>
+    <option value="NO2">NO2</option>
+</select>
+
+
+
+<!--<form id="form1" name="form1" method="post" action="">-->
+<!--    <h3 style="text-align: center; height: 40px">Hotel Data</h3>-->
+<!--    <table id="tabProduct">-->
+<!--&lt;!&ndash;        header&ndash;&gt;-->
+<!--        <tr>-->
+<!--            <td class="tdStyle" style="width: 2vw" Name="Num"></td>-->
+<!--            <td class="tdStyle" Name="female" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 1)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 1)">Female</td>-->
+<!--            <td class="tdStyle" Name="local" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 2)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 2)">Local</td>-->
+<!--            <td class="tdStyle" Name="usa" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 3)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 3)">USA</td>-->
+<!--            <td class="tdStyle" Name="sa" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 4)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 4)">SA</td>-->
+<!--            <td class="tdStyle" Name="eu" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 5)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 5)">EU</td>-->
+<!--            <td class="tdStyle" Name="mea" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 6)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 6)">MEA</td>-->
+<!--            <td class="tdStyle" Name="asia" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 7)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 7)">ASIA</td>-->
+<!--            <td class="tdStyle" Name="businessmen" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 8)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 8)">Businessmen</td>-->
+<!--            <td class="tdStyle" Name="tourists" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 9)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 9)">Tourists</td>-->
+<!--            <td class="tdStyle" Name="dr" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 10)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 10)">DR</td>-->
+<!--            <td class="tdStyle" Name="agency" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 11)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 11)">Agency</td>-->
+<!--            <td class="tdStyle" Name="ac" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 12)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 12)">AC</td>-->
+<!--            <td class="tdStyle" Name="u20" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 13)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 13)">U20</td>-->
+<!--            <td class="tdStyle" Name="20to35" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 14)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 14)">20-35</td>-->
+<!--            <td class="tdStyle" Name="35to55" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 15)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 15)">35-55</td>-->
+<!--            <td class="tdStyle" Name="m55" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 16)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 16)">M55</td>-->
+<!--            <td class="tdStyle" Name="price" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 17)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 17)">Price</td>-->
+<!--            <td class="tdStyle" Name="los" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 18)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 18)">LoS</td>-->
+<!--            <td class="tdStyle" Name="occupancy" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 19)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 19)">Occupancy</td>-->
+<!--            <td class="tdStyle" Name="conventions" EditType="TextBox" onmousedown="get_column_index(document.getElementById('tabProduct'), 20)" onmouseup="recover_unit_color(document.getElementById('tabProduct'), 20)">Conventions</td>-->
+<!--        </tr>-->
+
+<!--        <tr id="emptyRow">-->
+<!--            <td class="tdStyle" style="width: 5vw"><input type="checkbox" name="checkbox" value="checkbox" /></td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--            <td class="tdStyle" >0</td>-->
+<!--        </tr>-->
+<!--    </table>-->
+
+<!--    <hr />-->
+<!--    <hr />-->
+<!--    <hr />-->
+
+<!--    <br />-->
+<!--    <div style="text-align: center">-->
+
+<!--    </div>-->
+
+<!--    <div class="mySeasonChoiceStyle">-->
+<!--        <input type="button" id="occ_los_button" name="occ_los" value="Occ/LoS" onclick="choose_season_data_type(document.getElementById('tabProduct'), 0)" />-->
+<!--        <input type="button" id="total_time_button" name="total_time" value="Total" onclick="choose_season_data_type(document.getElementById('tabProduct'), 1)" />-->
+<!--    </div>-->
+
+<!--&lt;!&ndash;    <div id="seasonContainer">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="heatmapContainer">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--    <hr />-->
+<!--    <hr />-->
+
+<!--    <div class="myTypeChoiceStyle">-->
+<!--        <input type="button" id="area_button" name="area" value="Area" onclick="choose_main_data_type(document.getElementById('tabProduct'), 0)" />-->
+<!--        <input type="button" id="gender_button" name="gender" value="Gender" onclick="choose_main_data_type(document.getElementById('tabProduct'), 1)" />-->
+<!--        <input type="button" id="age_button" name="age" value="Age" onclick="choose_main_data_type(document.getElementById('tabProduct'), 2)" />-->
+<!--        <input type="button" id="group_button" name="group" value="Group" onclick="choose_main_data_type(document.getElementById('tabProduct'), 3)" />-->
+<!--    </div>-->
+
+<!--&lt;!&ndash;    <div id="mainHistogramContainer">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="pieChartContainer">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <div id="curveContainer">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--    <br />-->
+<!--    <br />-->
+<!--    <br />-->
+<!--    <br />-->
+<!--    <br />-->
+<!--    <br />-->
+
+<!--</form>-->
+
+    <div id="provinceContainer">
+    </div>
+
+    <div id="cityInProvinceContainer">
+    </div>
+
+    <div id="trylineCharts">
+    </div>
+    <div id="tryRadarCharts"></div>
+<div id="tryTempLineChart"></div>
+<div id="tryWindRose"></div>
+<div id="province_3D"></div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+<!--    <p id="output" style="margin-bottom: 5%; background-color: beige">-->
+
+<!--    </p>-->
+
+<!--    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/echarts.min.js"></script>-->
+
+    <script rel="javascript" src="../static/js/TableUpdate.js"></script>
+    <script rel="javascript" src="../static/js/off_busy_season_histogram_plot.js"></script>
+    <script rel="javascript" src="../static/js/heatmap_plot.js"></script>
+    <script rel="javascript" src="../static/js/main_histogram_plot.js"></script>
+    <script rel="javascript" src="../static/js/pie_chart_plot.js"></script>
+    <script rel="javascript" src="../static/js/type_curve_plot.js"></script>
+    <script rel="javascript" src="../static/js/Utils.js"></script>
+
+    <script rel="javascript" src="../static/js/province.js"></script>
+    <script rel="javascript" src="../static/js/zhouzhi.js"></script>
+    <script rel="javascript" src="../static/js/echarts-gl.min.js"></script>
+    <script rel="javascript" src="../static/js/province_3D.js"></script>
+    <script type="text/javascript" src="../static/js/china.js"></script>
+<!--    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=Ci4oiZl2xcGHhBW1qn8SaguSoDaG9jGQ"></script>-->
+<!--    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-nightly@5.1.2-dev.20210512/dist/extension/bmap.min.js"></script>-->
+
+    <script rel="javascript">
+
+        // let tabProduct = document.getElementById("tabProduct");
+        // // update_hotel_info(tabProduct);
+        // table_init(tabProduct);
+        // // 设置表格可编辑
+        // EditTables(tabProduct);
+        //
+        // // 等待与后端数据传输完毕
+        // setTimeout(function () {
+        //     // 默认选中第一个按钮
+        //     choose_season_data_type(tabProduct, 0);
+        //     // 绘制热力图
+        //     plot_heatmap(tabProduct);
+        //     // 绘制主柱状图：研究住客特征
+        //     choose_main_data_type(tabProduct, 0);
+        //     // 绘制饼图：详细研究住客特征在某一月份的横向比对
+        //     plot_pie_chart(tabProduct);
+        //     // 绘制折线图：详细研究住客某特征在时间上的纵向比对
+        //     plot_type_curve(tabProduct);
+        //
+        // }, 100);
+
+    </script>
+
+
+</body>
+</html>

@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    background-color: rgb(178,200,187);
 }
 .BMap_cpyCtrl {
     display:none;
@@ -44,61 +45,6 @@ table {
     border:1px solid #0099CC;
 }
 
-#seasonContainer {
-    /*float: left;                !* 取消div的自动换行 *!*/
-    display: inline;                /* 取消div的自动换行 */
-    position: relative;
-    margin-top: 2vw;
-    margin-left: 3vw;
-    background-color: white;
-    font-family: "American Typewriter";
-}
-
-/*.mySeasonHistogramSVG {*/
-/*    position: relative;*/
-/*    margin-top: 1vw;*/
-/*    margin-left: 3vw;*/
-/*    background-color: white;*/
-/*    font-family: "American Typewriter";*/
-/*}*/
-
-#heatmapContainer {
-    display: inline;
-    position: relative;
-    margin-top: 2vw;
-    margin-left: 3vw;
-    background-color: white;
-    font-family: "American Typewriter";
-}
-
-#mainHistogramContainer {
-    /*display: inline;*/
-    position: relative;
-    margin-top: 2vw;
-    margin-left: 15vw;
-    margin-bottom: 3vw;
-    background-color: white;
-    font-family: "American Typewriter";
-}
-
-#pieChartContainer {
-    display: inline;
-    position: relative;
-    margin-top: 5vw;
-    margin-left: 10vw;
-    background-color: white;
-    font-family: "American Typewriter";
-}
-
-#curveContainer {
-    display: inline;
-    position: relative;
-    margin-top: 5vw;
-    margin-left: 5vw;
-    background-color: white;
-    font-family: "American Typewriter";
-}
-
 #provinceContainer {
     /*display: inline;*/
     margin-top: 50px;
@@ -107,7 +53,7 @@ table {
     position: relative;
     /*margin-top: 5vw;*/
     /*margin-left: 5vw;*/
-    background-color: white;
+    background-color: rgb(178,200,187);
     font-family: "American Typewriter";
 }
 
@@ -118,7 +64,7 @@ table {
     height: 500px;
     /*margin-top: 5vw;*/
     /*margin-left: 5vw;*/
-    background-color: white;
+    background-color: rgb(178,200,187);
     font-family: "American Typewriter";
 }
 
@@ -128,7 +74,7 @@ table {
     height: 500px;
     /*margin-top: 5vw;*/
     /*margin-left: 5vw;*/
-    background-color: white;
+    background-color: rgb(178,200,187);
     font-family: "American Typewriter";
 }
 
@@ -138,7 +84,7 @@ table {
     height: 500px;
     /*margin-top: 5vw;*/
     /*margin-left: 5vw;*/
-    background-color: white;
+    background-color: rgb(178,200,187);
     font-family: "American Typewriter";
 }
 
@@ -148,7 +94,7 @@ table {
     height: 500px;
     /*margin-top: 5vw;*/
     /*margin-left: 5vw;*/
-    background-color: white;
+    background-color: rgb(178,200,187);
     font-family: "American Typewriter";
 }
 
@@ -158,7 +104,7 @@ table {
     height: 500px;
     /*margin-top: 5vw;*/
     /*margin-left: 5vw;*/
-    background-color: white;
+    background-color: rgb(178,200,187);
     font-family: "American Typewriter";
 }
 
@@ -168,22 +114,8 @@ table {
     height: 500px;
     /*margin-top: 5vw;*/
     /*margin-left: 5vw;*/
-    background-color: white;
+    background-color: rgb(178,200,187);
     font-family: "American Typewriter";
-}
-
-.mySeasonChoiceStyle {
-    position: relative;
-    margin-top: 2vw;
-    margin-bottom: 2vw;
-    margin-left: 5vw;
-}
-
-.myTypeChoiceStyle {
-    position: relative;
-    margin-top: 2vw;
-    margin-bottom: 2vw;
-    margin-left: 5vw;
 }
 
 
