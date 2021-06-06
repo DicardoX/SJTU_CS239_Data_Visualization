@@ -349,7 +349,8 @@ var GZData = [
 
 ];
 
-var planePath = 'path://M.6,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705';
+// var planePath = 'path://M.6,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705';
+var planePath = ""
 
 var convertData = function (data) {
     var res = [];
@@ -371,16 +372,16 @@ var convertData = function (data) {
 var color = ['#3ed4ff', '#ffa022', '#a6c84c'];
 var series = [];
 [
-    ['新乡', BJData],
-    ['九江', SHData],
+    ['新乡', []],
+    ['九江', []],
     ['新疆', GZData]
 ].forEach(function (item, i) {
     series.push({
-        name: item[0] + ' Top10',
+        // name: item[0] + ' Top10',
         type: 'lines',
         zlevel: 1,
         effect: {
-            show: true,
+            show: false,
             period: 6,
             trailLength: 0.7,
             color: '#fff',
@@ -394,28 +395,8 @@ var series = [];
             }
         },
         data: convertData(item[1])
-    }, {
-        name: item[0] + ' Top10',
-        type: 'lines',
-        zlevel: 2,
-        effect: {
-            show: true,
-            period: 6,
-            trailLength: 0,
-            symbol: planePath,
-            symbolSize: 15
-        },
-        lineStyle: {
-            normal: {
-                color: color[i],
-                width: 1,
-                opacity: 0.4,
-                curveness: 0.2
-            }
-        },
-        data: convertData(item[1])
-    }, {
-        name: item[0] + ' Top10',
+    },  {
+        // name: item[0] + ' Top10',
         type: 'effectScatter',
         coordinateSystem: 'geo',
         zlevel: 2,
@@ -494,3 +475,12 @@ option = {
 };
 var myecharts = echarts.init($('.map .geo')[0])
 myecharts.setOption(option)
+
+myecharts.on('click', function (params) {
+    //if 省或直辖市
+    console.log(params.name);
+    // Setnews(params.name);
+
+
+    //逻辑控制
+});

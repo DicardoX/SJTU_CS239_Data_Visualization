@@ -42,6 +42,16 @@ def create_table(my_table_name):
                  CITY_NAME CHAR(20) NOT NULL,
                  DATE CHAR(20) NOT NULL,
                  AQI FLOAT)""" % my_table_name
+    elif my_table_name == "city_based_IAQI":
+        sql = """CREATE TABLE %s(
+                 CITY_NAME CHAR(20) NOT NULL,
+                 DATE CHAR(20) NOT NULL,
+                 PM2_5 FLOAT,
+                 PM10 FLOAT,
+                 SO2 FLOAT,
+                 NO2 FLOAT,
+                 CO FLOAT,
+                 O3 FLOAT)""" % my_table_name
 
     # Execute
     cursor.execute(sql)
@@ -116,6 +126,25 @@ def insert_content_in_table(my_table_name, info_dict):
                     print("Error occurred when inserting table...")
                     db_connection.rollback()
         return
+    if my_table_name == "city_based_IAQI":
+        for key in info_dict.keys():
+            contents = info_dict[key]
+            for i in range(len(contents)):
+                # Transfer from index to date
+                date = get_date(year=2013, month=1, day=1, shift=i)
+
+                sql = """INSERT INTO %s(CITY_NAME, DATE, PM2_5, PM10, SO2, NO2, CO, O3) VALUES ('""" \
+                      % my_table_name + key + "', '" + date + """', %.2f, %.2f, %.2f, %.2f, %.2f, %.2f)""" % (
+                          contents[i][0], contents[i][1], contents[i][2], contents[i][3], contents[i][4],
+                          contents[i][5])
+                print(sql)
+                try:
+                    cursor.execute(sql)
+                    db_connection.commit()
+                except SyntaxError as e:
+                    print("Error occurred when inserting table...")
+                    db_connection.rollback()
+        return
 
 
 # 在database中查询某个table的特定内容
@@ -139,7 +168,7 @@ if __name__ == '__main__':
     # table_name = 'central_location'
     # table_name = "city_location_hash_table"
     # table_name = "city_features"
-    table_name = "city_based_AQI"
+    table_name = "city_based_IAQI"
     database_name = "ChinaVis"
     # database_name = "mysql"
 

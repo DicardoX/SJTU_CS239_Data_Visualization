@@ -7,6 +7,14 @@ body{
     background-position: 0 0 / cover;
     background-color: #101129;
 }
+.labels {
+    background-color: #3c7bad;
+    color: #ffffff;
+    border: 2px solid #4c9bfd;
+    border-radius: 5px;
+    /*border: 0;*/
+
+  }
 *{
     margin: 0;
     padding: 0;
@@ -42,6 +50,18 @@ a{
     /*font-weight: bold;*/
     word-spacing: 7px;
     /*background: linear-gradient(to bottom, #1950c4 0%, #000000 100%);*/
+}
+
+#map_id {
+    /*background-color: #1950c4;*/
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*justify-content: space-between;*/
+    width: 30rem;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    background-image: url(../images/rect.png);
+    background-size: cover;
 }
 
 /* --------------------------- BUTTON --------------------------- */
@@ -104,6 +124,31 @@ button:hover::after {
 }
 
 /* -------------------------- BUTTON END ------------------------- */
+
+/*#select_border {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    !*justify-content: space-between;*!*/
+/*    width: 8rem;*/
+/*    padding: 0.5rem 1rem;*/
+/*    box-sizing: border-box;*/
+/*    background-image: url(../images/rect.png);*/
+/*    background-size: cover;*/
+/*}*/
+
+#pollution_select {
+    position: relative;
+    margin-left: -0.4rem;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+    font-size: 0.5rem;
+    color: white;
+    background-color: #101129;
+    width: 4.5rem;
+    padding: 0.3rem 0.3rem;
+    border-radius: 5px;
+}
 
 .viewport {
     /* 限定大小 */
@@ -288,7 +333,7 @@ button:hover::after {
 /* 调用动画 */
 .monitor .marquee {
   /* //infinite永久调用动画 */
-  animation: row  10s linear infinite;
+  animation: row  200s linear infinite;
 }
 /*鼠标划入 停止动画  */
 .monitor .marquee:hover {
@@ -303,20 +348,20 @@ button:hover::after {
   margin-top: 1rem;
   justify-content: space-between;
 }
-.point .pie {
+.point .histogram {
   width: 13rem;
   height: 10rem;
   margin-left: -0.4rem;
 }
 .point .data {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 7rem;
-  padding: 1.5rem 1.25rem;
-  box-sizing: border-box;
-  background-image: url(../images/rect.png);
-  background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 6rem;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    background-image: url(../images/rect.png);
+    background-size: cover;
 }
 .point h4 {
   margin-bottom: 0.5rem;
@@ -363,9 +408,23 @@ button:hover::after {
   margin-top: 1rem;
 }
 .users .bar {
-  width: 24.5rem;
-  height: 10rem;
+    width: 24.5rem;
+    height: 10rem;
+    font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
 }
+
+#select_border {
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    width: 6rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 1rem;
+    box-sizing: border-box;
+    background-image: url(../images/rect.png);
+    background-size: cover;
+}
+
 .users .data {
   display: flex;
   flex-direction: column;
@@ -388,7 +447,7 @@ button:hover::after {
 }
 /* 订单 */
 .order {
-  height: 6.167rem;
+  height: 18.167rem;
 }
 .order .filter {
   display: flex;
@@ -645,6 +704,7 @@ button:hover::after {
   color: #a3c6f2;
   background-color: rgba(10, 67, 188, 0.2);
 }
+
 .top .province ul.sub {
   display: flex;
   flex-direction: column;
@@ -656,6 +716,16 @@ button:hover::after {
   color: #52ffff;
   padding: 0.417rem 0.6rem;
 }
+.monitor .col:nth-child(1) {
+ width: 4rem;
+  }
+  .monitor .col:nth-child(2) {
+ width: 15rem;
+ /* 不换行  一行省略*/
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+  }
 .clock {
   position: absolute;
   top: -1.5rem;

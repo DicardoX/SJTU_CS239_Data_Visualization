@@ -41,7 +41,7 @@ function draw_province_3D() {
     // 接口
     var center = {
         // "高雄市": [120.58, 22.97],
-       // "太原市":[112.34,37.97],
+        "太原市":[112.34,37.97],
 
         "石家庄市": [144.41, 38.14],
         "保定市": [115.17, 39.02],
@@ -53,7 +53,7 @@ function draw_province_3D() {
     var center2 = center
     // 接口
     var data = [
-       // { name: '太原市', value: (Math.random() * 200 + 1000).toFixed(0) },
+        { name: '太原市', value: (Math.random() * 200 + 1000).toFixed(0) },
         { name: '石家庄市', value: (Math.random() * 200 + 1000).toFixed(0) },
         { name: '保定市', value: (Math.random() * 200 + 1000).toFixed(0) },
         { name: '唐山市', value: (Math.random() * 200 + 1000).toFixed(0) },
@@ -65,12 +65,12 @@ function draw_province_3D() {
         return {
             coords: [
                 center[item.name],
-                [center[item.name][0], center[item.name][1] + item.value * 0.001]
+                [center[item.name][0], center[item.name][1] + item.value * 0.0001]
             ]
         }
     })
     var scatterData = data.map(item => {
-        return [center[item.name][0], center[item.name][1] + item.value * 0.001]
+        return [center[item.name][0], center[item.name][1] + item.value * 0.0001]
     })
     var scatterData2 = data.map(item => {
         return center[item.name]
@@ -160,7 +160,7 @@ function draw_province_3D() {
                     effect: {
                         show: false,
                         period: 4, //箭头指向速度，值越小速度越快
-                        trailLength: 0.2, //特效尾迹长度[0,1]值越大，尾迹越长重
+                        trailLength: 0.02, //特效尾迹长度[0,1]值越大，尾迹越长重
                         symbol: 'arrow', //箭头图标
                         symbolSize: 5, //图标大小
                     },

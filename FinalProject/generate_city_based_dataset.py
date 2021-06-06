@@ -11,7 +11,7 @@ import time
 import os
 
 from Utils.get_csv_input import get_csv_input
-from Utils.calculate_AQI import calculate_AQI
+from Utils.calculate_AQI import calculate_AQI, calculate_IAQI_list
 
 # Cancel scientific counting
 np.set_printoptions(suppress=True)
@@ -287,6 +287,29 @@ def generate_city_based_AQI():
     new_df.to_csv('./city_based_dataset/city_based_AQI/city_based_AQI.csv', encoding="utf_8_sig")
 
 
+# Generate city based IAQI
+def generate_city_based_IAQI():
+    print("Generating city based IAQI...")
+    city_AQI_dict = {}
+
+    # Get input
+    features_dict = get_csv_input("city_features.csv")
+
+    # Traverse cities
+    for key in features_dict.keys():
+        city_name = key
+        features_vectors_list = features_dict[city_name]
+        city_AQI_dict[city_name] = []
+        for i in range(len(features_vectors_list)):
+            IAQI_list = calculate_IAQI_list(features_vectors_list[i][0:6])
+            print(IAQI_list)
+            city_AQI_dict[city_name].append(IAQI_list)
+
+    # Write to csv file by pd.to_csv(), encoding with "utf_8_sig" to save Chinese correctly
+    new_df = pd.DataFrame.from_dict(city_AQI_dict, orient='index')
+    new_df.to_csv('./city_based_dataset/city_based_AQI/city_based_IAQI.csv', encoding="utf_8_sig")
+
+
 if __name__ == '__main__':
     # # Generate city list (from locations to city) based on observed_city_list
     # # Call for Baidu Map API
@@ -299,7 +322,10 @@ if __name__ == '__main__':
     # generate_city_dataset()
 
     # Generate city based AQI
-    generate_city_based_AQI()
+    # generate_city_based_AQI()
+
+    # Generate city based IAQI
+    generate_city_based_IAQI()
 
 
 

@@ -47,3 +47,13 @@ def calculate_AQI(pollution_list):
             AQI = cur_IAQI
     return AQI
 
+
+def calculate_IAQI_list(pollution_list):
+    IAQI = []
+    # Traverse each type of pollution
+    for i in range(len(pollution_list)):
+        # Current IAQI
+        cur_IAQI = calculate_IAQI(pollution_types[i], pollution_list[i])
+        IAQI.append(round(cur_IAQI, 2))
+    return IAQI
+
