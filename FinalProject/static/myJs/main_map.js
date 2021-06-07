@@ -1,9 +1,80 @@
+// main_map.js
+
+let observed_city_name = ["上海", "上海市",
+                      "北京", "北京市",
+                      "天津", "天津市",
+                      "重庆", "重庆市",
+                      "哈尔滨", "哈尔滨市", "大庆", "大庆市", "齐齐哈尔", "齐齐哈尔市",
+                      "长春", "长春市", "吉林", "吉林市", "四平", "四平市",
+                      "大连", "大连市", "沈阳", "沈阳市", "铁岭", "铁岭市",
+                      "呼和浩特", "呼和浩特市", "包头", "包头市", "鄂尔多斯", "鄂尔多斯市",
+                      "石家庄", "石家庄市", "唐山", "唐山市", "保定", "保定市", "承德", "承德市",
+                      "太原", "太原市", "大同", "大同市", "临汾", "临汾市",
+                      "青岛", "青岛市", "济南", "济南市", "烟台", "烟台市", "威海", "威海市",
+                      "郑州", "郑州市", "洛阳", "洛阳市", "开封", "开封市",
+                      "南京", "南京市", "苏州", "苏州市", "扬州", "扬州市", "徐州", "徐州市",
+                      "合肥", "合肥市", "黄山", "黄山市", "芜湖", "芜湖市",
+                      "武汉", "武汉市", "襄阳", "襄阳市", "宜昌", "宜昌市", "荆州", "荆州市",
+                      "长沙", "长沙市", "岳阳", "岳阳市", "张家界", "张家界市",
+                      "南昌", "南昌市", "九江", "九江市", "景德镇", "景德镇市",
+                      "杭州", "杭州市", "宁波", "宁波市", "温州", "温州市", "舟山", "舟山市",
+                      "厦门", "厦门市", "泉州", "泉州市", "福州", "福州市",
+                      "广州", "广州市", "深圳", "深圳市", "珠海", "珠海市",
+                      "桂林", "桂林市", "南宁", "南宁市", "北海", "北海市",
+                      "三亚", "三亚市", "海口", "海口市", "文昌", "文昌市",
+                      "遵义", "遵义市", "贵阳", "贵阳市", "安顺", "安顺市",
+                      "昆明", "昆明市", "丽江", "丽江市", "大理", "大理市",
+                      "成都", "成都市", "绵阳", "绵阳市", "宜宾", "宜宾市", "乐山", "乐山市",
+                      "西安", "西安市", "延安", "延安市", "咸阳", "咸阳市",
+                      "兰州", "兰州市", "天水", "天水市", "敦煌", "敦煌市",
+                      "银川", "银川市", "中卫", "中卫市", "吴忠", "吴忠市",
+                      "西宁", "西宁市", "格尔木", "格尔木市", "海东", "海东市",
+                      "乌鲁木齐", "乌鲁木齐市", "吐鲁番", "吐鲁番市", "喀什", "喀什市", "哈密", "哈密市",
+                      "拉萨", "拉萨市", "林芝", "林芝市",
+                      "台北", "台北市", "高雄", "高雄市", "桃园", "桃园市", "台南", "台南市", "花莲", "花莲市"];
+
+
+// Update global city
+function update_global_city(city_name) {
+    // Update current city in the header
+    update_current_city(city_name);
+
+    // Update curve module
+    change_curve_info(0);
+}
+
+
+// Update global date
+function update_global_date() {
+    let date = document.getElementById("date_choose").value;
+    date = date.replaceAll("-", "_");
+    // console.log(date);
+
+    // Update current date in the header
+    update_current_date(date);
+
+    // Update curve module
+    change_curve_info(0);
+}
+
+// Update global type
+function update_global_type() {
+    let type = document.getElementById("datatype").value;
+    // console.log(type);
+
+    // Update current type in the header
+    update_current_type(type);
+
+    // Update sub selectors
+    document.getElementById("pollution_select").value = type;
+    change_curve_info(0);
+}
+
+
 var geoCoordMap = {
     '新疆玛纳斯基地': [86.22, 44.30],
     '九江': [116.00, 29.70],
     '新乡': [116.402217, 35.311657],
-    ' ': [79.92, 37.12],
-    '  ': [86.85, 47.70],
     '若羌县': [88.17, 39.02],
     '上海': [121.4648, 31.2891],
     '东莞': [113.8953, 22.901],
@@ -121,228 +192,148 @@ var geoCoordMap = {
     '韶关': [113.7964, 24.7028]
 };
 
-var BJData = [
+var HEData = [
     [{
-        name: '新乡'
-    }, {
         name: '新乡',
         value: 200
     }],
     [{
-        name: '新乡'
-    }, {
         name: '呼和浩特',
         value: 90
     }],
     [{
-        name: '新乡'
-    }, {
         name: '哈尔滨',
         value: 90
     }],
     [{
-        name: '新乡'
-    }, {
         name: '石家庄',
         value: 90
     }],
     [{
-        name: '新乡'
-    }, {
         name: '昆明',
         value: 30
     }],
     [{
-        name: '新乡'
-    }, {
         name: '北京',
         value: 100
     }],
     [{
-        name: '新乡'
-    }, {
         name: '长春',
         value: 40
     }],
     [{
-        name: '新乡'
-    }, {
         name: '重庆',
         value: 40
     }],
     [{
-        name: '新乡'
-    }, {
         name: '贵阳',
         value: 50
     }],
     [{
-        name: '新乡'
-    }, {
         name: '南宁',
         value: 30
     }],
     [{
-        name: '新乡'
-    }, {
         name: '济南',
         value: 10
     }],
     [{
-        name: '新乡'
-    }, {
         name: '太原',
         value: 40
     }],
     [{
-        name: '新乡'
-    }, {
         name: '西安',
         value: 60
     }],
     [{
-        name: '新乡'
-    }, {
         name: '武汉',
         value: 50
     }],
     [{
-        name: '新乡'
-    }, {
         name: '合肥',
         value: 40
     }],
     [{
-        name: '新乡'
-    }, {
         name: '南京',
         value: 30
     }],
     [{
-        name: '新乡'
-    }, {
         name: '沈阳',
         value: 20
     }],
     [{
-        name: '新乡'
-    }, {
         name: '成都',
         value: 10
     }]
 ];
 
-var SHData = [
+var MIData = [
     [{
-        name: '九江'
-    }, {
         name: '九江',
         value: 200
     }],
 
     [{
-        name: '九江'
-    }, {
         name: '长沙',
         value: 95
     }],
     [{
-        name: '九江'
-    }, {
         name: '武汉',
         value: 30
     }],
     [{
-        name: '九江'
-    }, {
         name: '南昌',
         value: 20
     }],
     [{
-        name: '九江'
-    }, {
         name: '合肥',
         value: 70
     }],
     [{
-        name: '九江'
-    }, {
         name: '南京',
         value: 60
     }],
     [{
-        name: '九江'
-    }, {
         name: '福州',
         value: 50
     }],
     [{
-        name: '九江'
-    }, {
         name: '上海',
         value: 100
     }],
     [{
-        name: '九江'
-    }, {
         name: '深圳',
         value: 100
     }],
 
 ];
 
-var GZData = [
+var LIData = [
     [{
-        name: '新疆玛纳斯基地'
-    }, {
         name: '新疆玛纳斯基地',
         value: 200
     }],
     [{
-        name: '新疆玛纳斯基地'
-    }, {
-        name: '  ',
-        value: 90
-    }],
-    [{
-        name: '新疆玛纳斯基地'
-    }, {
-        name: ' ',
-        value: 40
-    }],
-    [{
-        name: '新疆玛纳斯基地'
-    }, {
         name: '呼和浩特',
         value: 90
     }],
     [{
-        name: '新疆玛纳斯基地'
-    }, {
         name: '昆明',
         value: 40
     }],
     [{
-        name: '新疆玛纳斯基地'
-    }, {
         name: '成都',
         value: 10
     }],
     [{
-        name: '新疆玛纳斯基地'
-    }, {
         name: '兰州',
         value: 95
     }],
     [{
-        name: '新疆玛纳斯基地'
-    }, {
         name: '银川',
         value: 90
     }],
     [{
-        name: '新疆玛纳斯基地'
-    }, {
         name: '西宁',
         value: 80
     }],
@@ -350,7 +341,7 @@ var GZData = [
 ];
 
 // var planePath = 'path://M.6,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705';
-var planePath = ""
+var planePath = '';
 
 var convertData = function (data) {
     var res = [];
@@ -372,12 +363,12 @@ var convertData = function (data) {
 var color = ['#3ed4ff', '#ffa022', '#a6c84c'];
 var series = [];
 [
-    ['新乡', []],
-    ['九江', []],
-    ['新疆', GZData]
+    ['重度污染', HEData],
+    ['中度污染', MIData],
+    ['轻度污染', LIData]
 ].forEach(function (item, i) {
     series.push({
-        // name: item[0] + ' Top10',
+        name: item[0],
         type: 'lines',
         zlevel: 1,
         effect: {
@@ -394,9 +385,10 @@ var series = [];
                 curveness: 0.2
             }
         },
-        data: convertData(item[1])
-    },  {
-        // name: item[0] + ' Top10',
+
+        // data: convertData(item[1])
+    }, {
+        name: item[0],
         type: 'effectScatter',
         coordinateSystem: 'geo',
         zlevel: 2,
@@ -420,8 +412,8 @@ var series = [];
         },
         data: item[1].map(function (dataItem) {
             return {
-                name: dataItem[1].name,
-                value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value])
+                name: dataItem[0].name,
+                value: geoCoordMap[dataItem[0].name].concat([dataItem[0].value])
             };
         })
     });
@@ -439,18 +431,23 @@ option = {
         trigger: 'item'
     },
     legend: {
-        orient: 'vertical',
-        top: 'bottom',
-        left: 'right',
-        data: ['北京 Top10', '上海 Top10', '广州 Top10'],
-        textStyle: {
-            color: '#fff'
-        },
-        selectedMode: 'single'
+        type: 'plain',
+        icon: 'square',//正方形图例
+        data:['重度污染','中度污染','轻度污染'],
+        align: 'left',//图例在文字左边
+        left: 10,//距离左边
+        top:10,//距离上边
+        orient:'vertical',//垂直分布
+        textStyle:{
+            color:'#ffffff'
+        }
     },
     geo: {
         map: 'china',
-        // zoom: 1.2,
+        scaleLimit: {
+            min: 1.1,
+            max: 5.0,
+        },
         label: {
             emphasis: {
                 show: false
@@ -465,22 +462,32 @@ option = {
             emphasis: {
                 areaColor: '#0b1c2d'
             }
-        },
-        scaleLimit: {
-            min:1.1,
-            max:3.0,
         }
     },
     series: series
 };
-var myecharts = echarts.init($('.map .geo')[0])
-myecharts.setOption(option)
 
+var myecharts = echarts.init($('.map .geo')[0]);
+myecharts.setOption(option);
+
+// If clicked in the main map
 myecharts.on('click', function (params) {
-    //if 省或直辖市
-    console.log(params.name);
-    // Setnews(params.name);
+    // Obtain params name
+    let params_name = params.name;
+
+    // Set news
+    set_news(params_name);
+
+    // If in observed city name
+    if(observed_city_name.indexOf(params_name) !== -1) {
+        // console.log(params_name);
+
+        // Update current city name
+        update_global_city(params_name);
 
 
-    //逻辑控制
+    } else {
+        // Provinces or other areas
+    }
+
 });

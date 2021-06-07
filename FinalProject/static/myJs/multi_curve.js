@@ -2,33 +2,46 @@
 
 let target_list = ["PM2_5", "PM10", "SO2", "NO2", "CO", "O3", "U", "V", "TEMP", "RH", "PSFC"]
 
-let cur_city_name = "合肥市";
-let cur_target_type = "SO2";
+// Global button choice
+let global_button_choice = 0;
+
+// Obtain global city name and type
+let cur_city_name = document.getElementById("current_city").innerText;
+let cur_target_type = document.getElementById("current_type").innerText;
 
 // Change target type
 function change_curve_info(type) {
-    let index = 0;
-    if (type === 0) {
-        index = document.getElementById("pollution_select").selectedIndex;
+    cur_city_name = document.getElementById("current_city").innerText;
+
+    if(type === 0) {
+        // Global modification
+        cur_target_type = document.getElementById("current_type").innerText;
+    } else {
+        // Local modification
+        let index = document.getElementById("pollution_select").selectedIndex;
         cur_target_type = target_list[index - 1];
     }
-    else {
-        index = document.getElementById("target_select").selectedIndex;
-        cur_target_type = target_list[5 + index];
+    if(global_button_choice === 0) {
+        // Plot analysis curve
+    } else {
+        update_predicted_curve(cur_city_name, cur_target_type);
     }
-    // console.log(index)
-    // console.log(cur_city_name, cur_target_type);
-    update_predicted_curve(cur_city_name, cur_target_type);
 }
 
 // Button control
 // Chosen type: 0 for analysis (by default), 1 for prediction
 function button_control(chosen_type) {
-    console.log("Succeed!");
+    // Update info
+    cur_city_name = document.getElementById("current_city").innerText;
+    cur_target_type = document.getElementById("current_type").innerText;
+    // Reset the local selection
+    document.getElementById("pollution_select").value = cur_target_type;
 
     if(chosen_type === 0) {
         document.getElementById("curve_button_1").style.color = "white";
         document.getElementById("curve_button_2").style.color = "#1950c4";
+        global_button_choice = 0;
+
         let curve_chart = echarts.init($('.bar')[0]);
         curve_chart.clear();
         plot_analysis_curve();
@@ -37,6 +50,8 @@ function button_control(chosen_type) {
     else {
         document.getElementById("curve_button_2").style.color = "white";
         document.getElementById("curve_button_1").style.color = "#1950c4";
+        global_button_choice = 1;
+
         let curve_chart = echarts.init($('.bar')[0]);
         curve_chart.clear();
         update_predicted_curve(cur_city_name, cur_target_type);

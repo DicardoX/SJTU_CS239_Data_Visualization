@@ -22,28 +22,28 @@
             <div class="overview panel">
                 <div class="inner">
                     <div class="item">
-                        <h4>2,192</h4>
+                        <h4><div id="current_city" style="font-size: 1rem; margin-bottom: 0.55rem; alignment: bottom">北京</div></h4>
                         <span>
                             <i class="icon-dot" style="color: #006cff"></i>
-                            总天数
+                            当前城市
                         </span>
                     </div>
                     <div class="item">
-                        <h4>69.32</h4>
+                        <h4><div id="current_date" style="font-size: 1rem; margin-bottom: 0.55rem; alignment: bottom">2013_01_01</div></h4>
                         <span>
                             <i class="icon-dot" style="color: #6acca3"></i>
-                            城市AQI
+                            当前日期
                         </span>
                     </div>
                     <div class="item">
-                        <h4 style="alignment: center">北风2级</h4>
+                        <h4><div id="current_type" style="font-size: 1rem; margin-bottom: 0.55rem; alignment: bottom">PM2_5</div></h4>
                         <span>
                             <i class="icon-dot" style="color: #6acca3"></i>
-                            日均风向
+                            当前污染物
                         </span>
                     </div>
                     <div class="item">
-                        <h4>优</h4>
+                        <h4><div style="font-size: 1rem; margin-bottom: 0.55rem; alignment: bottom">优</div></h4>
                         <span>
                             <i class="icon-dot" style="color: #ed3f35"></i>
                             空气质量等级
@@ -54,149 +54,37 @@
             <!--监控-->
             <div class="monitor panel">
                 <div class="inner">
-                    <div class="tabs">
-                        <a href="javascript:" data-index="0" class="active">(此处做成相关新闻模块)</a>
-                        <a href="javascript:" data-index="1">(相关新闻舆情分析)</a>
+                    <div class="button_style">
+                        <button id="news_button_1" onclick="news_button_control(0)" style="width: 5rem; margin-left: 1rem"> 相关新闻 </button>
+                        <button id="news_button_2" onclick="news_button_control(1)" style="width: 5rem"> 舆情分析 </button>
                     </div>
+
+<!--                    <div class="tabs">-->
+<!--                        <a href="javascript:" data-index="0" class="active">(此处做成相关新闻模块)</a>-->
+<!--                        <a href="javascript:" data-index="1">(相关新闻舆情分析)</a>-->
+<!--                    </div>-->
                     <div class="content" style="display: block;">
-                        <div class="head">
-                            <span class="col">Header1</span>
-                            <span class="col">Header2</span>
-                            <span class="col">Header3</span>
-                        </div>
+<!--                        <div class="head">-->
+<!--                            <span class="col">Header1</span>-->
+<!--                            <span class="col">Header2</span>-->
+<!--                            <span class="col">Header3</span>-->
+<!--                        </div>-->
                         <div class="marquee-view">
                             <div class="marquee">
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20180701</span>-->
-<!--                                    <span class="col">11北京市昌平西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000001</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190601</span>-->
-<!--                                    <span class="col">北京市昌平区城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190704</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000003</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20180701</span>-->
-<!--                                    <span class="col">北京市昌平区建路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000004</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190701</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000005</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190701</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000006</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190701</span>-->
-<!--                                    <span class="col">北京市昌平区建西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000007</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190701</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000008</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190701</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000009</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190710</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000010</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
+
+                            </div>
+                        </div>
+
+                        <div class="chart">
+                            <div class="news_chart">
                             </div>
                         </div>
                     </div>
                     <div class="content">
-<!--                        <div class="head">-->
-<!--                            <span class="col">Header</span>-->
-<!--                            <span class="col">设备地址</span>-->
-<!--                            <span class="col">异常代码</span>-->
-<!--                        </div>-->
+
                         <div class="marquee-view">
                             <div class="marquee">
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190701</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000001</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190701</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190703</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190704</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190705</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190706</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190707</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190708</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190709</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
-<!--                                <div class="row">-->
-<!--                                    <span class="col">20190710</span>-->
-<!--                                    <span class="col">北京市昌平区建材城西路金燕龙写字楼</span>-->
-<!--                                    <span class="col">1000002</span>-->
-<!--                                    <span class="icon-dot"></span>-->
-<!--                                </div>-->
+
                             </div>
                         </div>
                     </div>
@@ -209,20 +97,6 @@
                     <div class="chart">
                         <div class="histogram"></div>
                         <div class="data">
-<!--                            <div class="item">-->
-<!--                                <h4>320,11</h4>-->
-<!--                                <span>-->
-<!--                                    <i class="icon-dot" style="color: #ed3f35"></i>-->
-<!--                                    点位总数-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                            <div class="item">-->
-<!--                                <h4>418</h4>-->
-<!--                                <span>-->
-<!--                                    <i class="icon-dot" style="color: #eacf19"></i>-->
-<!--                                    本月新增-->
-<!--                                </span>-->
-<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -234,10 +108,11 @@
                 <h3 id="map_id">
 <!--                    <span class="icon-cube"></span>-->
 <!--                    (全国污染物分布图)-->
-                    <label for="meeting" class="icon-cube">选择日期：</label><input onchange="button_control(0)" id="meeting" class="labels" type="date" min="2013-01-01" max="2018-12-31" value="2013-01-01"/>
-                    <label for="meeting" class="icon-cube" style="margin-left: 0.5rem">选择污染物：</label>
-                    <select id="datatype" class="labels" style="width: 5rem;">
-                        <option value="PM2.5" class="labels">PM2.5</option>
+                    <label for="date_choose" class="icon-cube">选择日期：</label>
+                    <input onchange="update_global_date()" id="date_choose" class="labels" type="date" min="2013-01-01" max="2018-12-31" value="2013-01-01"/>
+                    <label for="datatype" class="icon-cube" style="margin-left: 0.5rem">选择污染物：</label>
+                    <select id="datatype" class="labels" style="width: 5rem;" onchange="update_global_type()">
+                        <option value="PM2_5" class="labels">PM2_5</option>
                         <option value="PM10" class="labels">PM10</option>
                         <option value="O3" class="labels">O3</option>
                         <option value="CO" class="labels">CO</option>
@@ -261,7 +136,7 @@
                     <div class="chart">
                         <div class="bar" id="cur_chart"></div>
                         <div id="select_border">
-                            <select id="pollution_select" onchange="change_curve_info(0)">
+                            <select id="pollution_select" onchange="change_curve_info(1)">
                                 <option value="" disabled selected>污染物类型</option>
                                 <option value="PM2_5">PM2.5</option>
                                 <option value="PM10">PM10</option>
@@ -271,14 +146,6 @@
                                 <option value="O3">O3</option>
                             </select>
 
-<!--                            <select id="target_select">-->
-<!--                                <option value="" disabled selected>气象指标</option>-->
-<!--                                <option value="U">纬向风速</option>-->
-<!--                                <option value="V">经向风速</option>-->
-<!--                                <option value="TEMP">气温</option>-->
-<!--                                <option value="RH">相对湿度</option>-->
-<!--                                <option value="PSFC">地面气压</option>-->
-<!--                            </select>-->
                         </div>
                     </div>
                 </div>
@@ -290,84 +157,14 @@
                 <div class="inner">
                     <h3>3D省份地图</h3>
                     <div id="province_3D"> </div>
-<!--                    &lt;!&ndash; 筛选 &ndash;&gt;-->
-<!--                    <div class="filter">-->
-<!--                        <a href="javascript:" data-key="day365" class="active">365天</a>-->
-<!--                        <a href="javascript:" data-key="day90">90天</a>-->
-<!--                        <a href="javascript:" data-key="day30">30天</a>-->
-<!--                        <a href="javascript:" data-key="day1">24小时</a>-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash; 数据 &ndash;&gt;-->
-<!--                    <div class="data">-->
-<!--                        <div class="item">-->
-<!--                            <h4>20,301,987</h4>-->
-<!--                            <span>-->
-<!--                                <i class="icon-dot" style="color: #ed3f35;"></i>-->
-<!--                                订单量-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                        <div class="item">-->
-<!--                            <h4>99834</h4>-->
-<!--                            <span>-->
-<!--                                <i class="icon-dot" style="color: #eacf19;"></i>-->
-<!--                                销售额(万元)-->
-<!--                            </span>-->
-<!--                        </div>-->
-<!--                    </div>-->
                 </div>
             </div>
-            <!-- 销售额 -->
-<!--            <div class="sales panel">-->
-<!--                <div class="inner">-->
-<!--                    <div class="caption">-->
-<!--                        <h3>销售额统计</h3>-->
-<!--                        <a href="javascript:" class="active" data-type="year">年</a>-->
-<!--                        <a href="javascript:" data-type="quarter">季</a>-->
-<!--                        <a href="javascript:" data-type="month">月</a>-->
-<!--                        <a href="javascript:" data-type="week">周</a>-->
-<!--                    </div>-->
-<!--                    <div class="chart">-->
-<!--                        <div class="label">单位:万</div>-->
-<!--                        <div class="line"></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
             <!-- 渠道 季度 -->
             <div class="wrap">
                 <div class="channel panel">
                     <div class="inner">
                         <h3>(风力玫瑰图)</h3>
                         <div class="data">
-<!--                            <div class="item">-->
-<!--                                <h4>39 <small>%</small></h4>-->
-<!--                                <span>-->
-<!--                                    <i class="icon-plane"></i>-->
-<!--                                    机场-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                            <div class="item">-->
-<!--                                <h4>28 <small>%</small></h4>-->
-<!--                                <span>-->
-<!--                                    <i class="icon-bag"></i>-->
-<!--                                    商场-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="data">-->
-<!--                            <div class="item">-->
-<!--                                <h4>20 <small>%</small></h4>-->
-<!--                                <span>-->
-<!--                                    <i class="icon-train"></i>-->
-<!--                                    地铁-->
-<!--                                </span>-->
-<!--                            </div>-->
-<!--                            <div class="item">-->
-<!--                                <h4>13 <small>%</small></h4>-->
-<!--                                <span>-->
-<!--                                    <i class="icon-bus"></i>-->
-<!--                                    火车站-->
-<!--                                </span>-->
-<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -375,26 +172,6 @@
                     <div class="inner">
                         <h3>(雷达图)</h3>
                         <div class="chart">
-<!--                            <div class="box">-->
-<!--                                <div class="gauge"></div>-->
-<!--                                <div class="label">75<small> %</small></div>-->
-<!--                            </div>-->
-<!--                            <div class="data">-->
-<!--                                <div class="item">-->
-<!--                                    <h4>1,321</h4>-->
-<!--                                    <span>-->
-<!--                                        <i class="icon-dot" style="color: #6acca3"></i>-->
-<!--                                        销售额(万元)-->
-<!--                                    </span>-->
-<!--                                </div>-->
-<!--                                <div class="item">-->
-<!--                                    <h4>150%</h4>-->
-<!--                                    <span>-->
-<!--                                        <i class="icon-dot" style="color: #ed3f35"></i>-->
-<!--                                        同比增长-->
-<!--                                    </span>-->
-<!--                                </div>-->
-<!--                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -403,70 +180,30 @@
             <div class="top panel">
                 <div class="inner">
                     <h3> () </h3>
-<!--                    <div class="all">-->
-<!--                        <h3>全国热榜</h3>-->
-<!--                        <ul>-->
-<!--                            <li>-->
-<!--                                <i class="icon-cup1" style="color: #d93f36;"></i>-->
-<!--                                可爱多-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <i class="icon-cup2" style="color: #68d8fe;"></i>-->
-<!--                                娃哈啥-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <i class="icon-cup3" style="color: #4c9bfd;"></i>-->
-<!--                                喜之郎-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
-<!--                    <div class="province">-->
-<!--                        <h3>各省热销 <i class="date">// 近30日 //</i></h3>-->
-<!--                        <div class="data">-->
-<!--                            <ul class="sup">-->
-<!--                                <li>-->
-<!--                                    <span>北京</span>-->
-<!--                                    <span>25,179 <s class="icon-up"></s></span>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <span>河北</span>-->
-<!--                                    <span>23,252 <s class="icon-down"></s></span>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <span>上海</span>-->
-<!--                                    <span>20,760 <s class="icon-up"></s></span>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <span>江苏</span>-->
-<!--                                    <span>23,252 <s class="icon-down"></s></span>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <span>山东</span>-->
-<!--                                    <span>20,760 <s class="icon-up"></s></span>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                            <ul class="sub">-->
-<!--                                &lt;!&ndash; <li><span>数据</span><span> 数据<s class="icon-up"></s></span></li> &ndash;&gt;-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                    </div>-->
                 </div>
             </div>
         </div>
     </div>
 </body>
 <script src="../static/myJs/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.2.1/echarts.min.js"></script>
+<script src="../static/myJs/echarts.min.js"></script>
 <script src="../static/myJs/index.js"></script>
 <script src="../static/myJs/multi_curve.js"></script>
 <script src="../static/myJs/histogram.js"></script>
+<script src="../static/myJs/header.js"></script>
 
 <script src="../static/myJs/china.js"></script>
-<script src="../static/myJs/mymap.js"></script>
+<script src="../static/myJs/main_map.js"></script>
+<script src="../static/myJs/news_display.js"></script>
 
 <script>
     // Curve part is set to analysis mode by default
     button_control(0);
+
+    // var fruits = ["Banana", "Orange", "Apple", "Mango"];
+    // var a = fruits.indexOf("Apples"); // 2
+    //
+    // console.log(a);
 </script>
 
 </html>

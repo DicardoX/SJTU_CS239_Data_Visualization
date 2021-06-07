@@ -66,7 +66,7 @@ a{
 
 /* --------------------------- BUTTON --------------------------- */
 
-.curve_button {
+.button_style {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -136,6 +136,7 @@ button:hover::after {
 /*    background-size: cover;*/
 /*}*/
 
+/* -------------------- Pollution Select -------------------------- */
 #pollution_select {
     position: relative;
     margin-left: -0.4rem;
@@ -144,11 +145,24 @@ button:hover::after {
     font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
     font-size: 0.5rem;
     color: white;
-    background-color: #101129;
+    background-color: #3c7bad;
+    border: 2px solid #4c9bfd;
     width: 4.5rem;
     padding: 0.3rem 0.3rem;
     border-radius: 5px;
 }
+/* ------------------ Pollution Select End ------------------------- */
+
+/* -------------------------- News Part ---------------------------- */
+.news_chart {
+    width: 24.5rem;
+    height: 10rem;
+    font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+}
+/* ------------------------ News Part End --------------------------- */
+
+
+
 
 .viewport {
     /* 限定大小 */
@@ -250,19 +264,12 @@ button:hover::after {
 	justify-content: space-between;
 	line-height: 1.05;
   }
-  .monitor .col:nth-child(1) {
-	width: 3.2rem;
-  }
-  .monitor .col:nth-child(2) {
-	width: 8.4rem;
-	/* 不换行  一行省略*/
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-  }
-  .monitor .col:nth-child(3) {
-	width: 3.2rem;
-  }
+  /*.monitor .col:nth-child(1) {*/
+	/*width: 3.2rem;*/
+  /*}*/
+  /*.monitor .col:nth-child(3) {*/
+	/*width: 3.2rem;*/
+  /*}*/
   .monitor .marquee-view{
   position: absolute;
   top: 1.6rem;
@@ -327,13 +334,13 @@ button:hover::after {
 @keyframes row{
   0%{}
   100%{
-    transform: translateY(-50%);
+    transform: translateY(-500px);
   }
 }
 /* 调用动画 */
 .monitor .marquee {
   /* //infinite永久调用动画 */
-  animation: row  200s linear infinite;
+  animation: row  50s linear infinite;
 }
 /*鼠标划入 停止动画  */
 .monitor .marquee:hover {
@@ -719,12 +726,18 @@ button:hover::after {
 .monitor .col:nth-child(1) {
  width: 4rem;
   }
-  .monitor .col:nth-child(2) {
- width: 15rem;
+.monitor .col:nth-child(2) {
+    width: 15rem;
+    color: white;
+    font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+    font-size: medium;
+    word-break: break-word; /* 文本行的任意字内断开 */
+    white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
  /* 不换行  一行省略*/
- white-space: nowrap;
+ /* white-space: nowrap;
  overflow: hidden;
- text-overflow: ellipsis;
+ text-overflow: ellipsis; */
+
   }
 .clock {
   position: absolute;

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 import pandas as pd
 import settings
 import pymysql
+import os
 
 
 # -------------------------- MySQL Query Part -------------------------------
@@ -123,20 +124,22 @@ def update_predicted_curve():
         city_name = target.get("City_name")
         target_type = target.get("Target_type")
         target_type_index = target_list.index(target_type)
-        print(target_type_index)
+        # print(target_type_index)
+
+        city_name += "市"
 
         print("City name: %s | Target type: %s" % (city_name, target_type))
 
         # 从mysql数据库获取数据，2018_01_01到2018_01_07共7天的数据
         # 特征
-        targets, operators, amounts = ["city_name", "date", "date"], ['=', '>', '<'], ["合肥市", "2017_12_31", "2018_01_08"]
+        targets, operators, amounts = ["city_name", "date", "date"], ['=', '>', '<'], [city_name, "2017_12_31", "2018_01_08"]
         results = query_city_features(my_targets=targets, my_operators=operators, my_amounts=amounts)
         # AQI
-        targets, operators, amounts = ["city_name", "date", "date"], ['=', '>', '<'], ["合肥市", "2017_12_31",
+        targets, operators, amounts = ["city_name", "date", "date"], ['=', '>', '<'], [city_name, "2017_12_31",
                                                                                        "2018_01_08"]
         AQIs = query_city_based_AQI(my_targets=targets, my_operators=operators, my_amounts=amounts)
         # IAQI
-        targets, operators, amounts = ["city_name", "date", "date"], ['=', '>', '<'], ["合肥市", "2017_12_31",
+        targets, operators, amounts = ["city_name", "date", "date"], ['=', '>', '<'], [city_name, "2017_12_31",
                                                                                        "2018_01_08"]
         IAQIs = query_city_based_IAQI(my_targets=targets, my_operators=operators, my_amounts=amounts)
 
