@@ -35,15 +35,15 @@
     
         ```javascript
         option = {
-        		// ...
-        		geo: {
-        				// zoom: 1.2
-        				// Add scaleLimit
-        				scaleLimit: {
-                    min:1.1,
-                    max:3.0,
-                }
+        	// ...
+        	geo: {
+        		// zoom: 1.2
+        		// Add scaleLimit
+        		scaleLimit: {
+        			min:1.1,
+        			max:3.0,
         		}
+        	}
         }
         // ...
         myecharts.setOption(option)
@@ -80,6 +80,11 @@
     - 添加了主地图与数据库的实时联动和更新；
 
 - *2021.6.8*：
+
+    - 将污染指标模块、风力玫瑰图模块、污染物分析模块和城市柱状图模块移植到前后端框架中；
+    - 添加了污染指标模块的前后端交互，优化了新闻分析模块的前后端交互
+
+    <img src="./cut/截屏2021-06-09 上午2.40.24.png" alt="avatar" style="zoom:40%;" />
 
     - 修复了加入地图缩放后的后台 *bug* 以及由此导致的显示 *bug*，原因是该部分文件中绘图时的 *option* 为全局变量，会影响到其系统中的其他部分； 
     - 修复了数据库频繁访问导致的后端报错 `pymysql.err.InterfaceError: (0, '')` 以及前端报错 `Error 500` 数据库连接断开，原因是在本来的方案里，在 `app.py` 运行的过程中仅在最开始建立数据库连接，在 `app.py` 运行结束后断开连接，即主函数如下：
