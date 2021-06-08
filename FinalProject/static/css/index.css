@@ -161,8 +161,13 @@ button:hover::after {
 }
 /* ------------------------ News Part End --------------------------- */
 
-
-
+/* ------------------------ Histogram Part -------------------------- */
+.histogram {
+  width: 13rem;
+  height: 10rem;
+  margin-left: -0.4rem;
+}
+/* ---------------------- Histogram Part End ------------------------ */
 
 .viewport {
     /* 限定大小 */

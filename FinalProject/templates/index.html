@@ -55,20 +55,11 @@
             <div class="monitor panel">
                 <div class="inner">
                     <div class="button_style">
-                        <button id="news_button_1" onclick="news_button_control(0)" style="width: 5rem; margin-left: 1rem"> 相关新闻 </button>
-                        <button id="news_button_2" onclick="news_button_control(1)" style="width: 5rem"> 舆情分析 </button>
+                        <button id="news_button_1" onclick="news_button_control(0)" style="width: 7rem; margin-left: 1rem"> 相关热点新闻 </button>
+                        <button id="news_button_2" onclick="news_button_control(1)" style="width: 7rem"> 新闻舆情分析 </button>
                     </div>
 
-<!--                    <div class="tabs">-->
-<!--                        <a href="javascript:" data-index="0" class="active">(此处做成相关新闻模块)</a>-->
-<!--                        <a href="javascript:" data-index="1">(相关新闻舆情分析)</a>-->
-<!--                    </div>-->
                     <div class="content" style="display: block;">
-<!--                        <div class="head">-->
-<!--                            <span class="col">Header1</span>-->
-<!--                            <span class="col">Header2</span>-->
-<!--                            <span class="col">Header3</span>-->
-<!--                        </div>-->
                         <div class="marquee-view">
                             <div class="marquee">
 
@@ -76,7 +67,7 @@
                         </div>
 
                         <div class="chart">
-                            <div class="news_chart">
+                            <div id="word_cloud_container" class="news_chart">
                             </div>
                         </div>
                     </div>
@@ -93,10 +84,24 @@
             <!--点位-->
             <div class="point panel">
                 <div class="inner">
-                    <h3>(当前省份的城市排序柱状图)</h3>
+                    <h3>城市污染柱状图</h3>
                     <div class="chart">
                         <div class="histogram"></div>
                         <div class="data">
+                            <div class="item">
+                                <h4>南昌</h4>
+                                <span>
+                                    <i class="icon-dot" style="color: #ed3f35"></i>
+                                    污染最重
+                                </span>
+                            </div>
+                            <div class="item">
+                                <h4>4九江</h4>
+                                <span>
+                                    <i class="icon-dot" style="color: #eacf19"></i>
+                                    污染最轻
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -110,7 +115,9 @@
 <!--                    (全国污染物分布图)-->
                     <label for="date_choose" class="icon-cube">选择日期：</label>
                     <input onchange="update_global_date()" id="date_choose" class="labels" type="date" min="2013-01-01" max="2018-12-31" value="2013-01-01"/>
+
                     <label for="datatype" class="icon-cube" style="margin-left: 0.5rem">选择污染物：</label>
+
                     <select id="datatype" class="labels" style="width: 5rem;" onchange="update_global_type()">
                         <option value="PM2_5" class="labels">PM2_5</option>
                         <option value="PM10" class="labels">PM10</option>
@@ -124,6 +131,7 @@
                     <div class="geo"></div>
                 </div>
             </div>
+
             <!-- 用户 -->
             <div class="users panel">
                 <div class="inner">
@@ -161,49 +169,120 @@
             </div>
             <!-- 渠道 季度 -->
             <div class="wrap">
-                <div class="channel panel">
+                                <div class="channel panel">
                     <div class="inner">
-                        <h3>(风力玫瑰图)</h3>
+                        <h3>污染指标</h3>
                         <div class="data">
+                            <div class="item">
+                                <h4><div id="city_aqi" style="font-size: 1rem">74.52</div><small></small></h4>
+                                <span>
+                                    城市AQI
+                                </span>
+                            </div>
+                            <div class="item">
+                                <h4><div id="first_type" style="font-size: 1rem">PM2_5</div><small></small></h4>
+                                <span>
+                                    首要污染物
+                                </span>
+                            </div>
+                        </div>
+                        <div class="data">
+                            <div class="item">
+                                <h4><div id="second_aqi" style="font-size: 1rem">68.41</div><small></small></h4>
+                                <span>
+                                    第二AQI
+                                </span>
+                            </div>
+                            <div class="item">
+                                <h4><div id="second_type" style="font-size: 1rem">PM10</div><small></small></h4>
+                                <span>
+                                    次要污染物
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="quarter panel">
                     <div class="inner">
-                        <h3>(雷达图)</h3>
-                        <div class="chart">
+                        <h3>地区风向</h3>
+                        <div class="chart" id="wind-graph">
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- 排行榜 -->
-            <div class="top panel">
+            <!-- 各种气象指标 -->
+            <div class="sales panel">
                 <div class="inner">
-                    <h3> () </h3>
+                	<div class="caption">
+                        <h3>气象指标</h3>
+                        <a href="javascript:" class="active" data-type="temprature">气温</a>
+                        <a href="javascript:" data-type="wind_speed">风速</a>
+                        <a href="javascript:" data-type="moisture">湿度</a>
+                        <a href="javascript:" data-type="atmosphere">气压</a>
+                        <a href="javascript:" data-type="integrate">综合</a>
+                    </div>
+                    <div class="chart">
+                        <div class="label" id="unit">单位:摄氏度</div>
+                        <div class="line"></div>
+                    </div>
                 </div>
             </div>
+<!--            &lt;!&ndash; 排行榜 &ndash;&gt;-->
+<!--            <div class="top panel">-->
+<!--                <div class="inner">-->
+<!--                    <h3> () </h3>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </body>
 <script src="../static/myJs/jquery.min.js"></script>
 <script src="../static/myJs/echarts.min.js"></script>
+<script src="../static/myJs/d3.v6.min.js"></script>
+<script src="../static/myJs/word_cloud.js"></script>
+<script src="../static/myJs/echarts-wordcloud.js"></script>
 <script src="../static/myJs/index.js"></script>
 <script src="../static/myJs/multi_curve.js"></script>
 <script src="../static/myJs/histogram.js"></script>
 <script src="../static/myJs/header.js"></script>
+<script src="../static/myJs/update_global_msg.js"></script>
+<script src="../static/myJs/wind_direction.js"></script>
+<script src="../static/myJs/weather_amount.js"></script>
+<script src="../static/myJs/pollution_amount.js"></script>
 
 <script src="../static/myJs/china.js"></script>
 <script src="../static/myJs/main_map.js"></script>
 <script src="../static/myJs/news_display.js"></script>
 
 <script>
+    // Set initial global msg
+    document.getElementById("current_city").innerText = "北京";
+    document.getElementById("current_date").innerText = "2013_01_01";
+    document.getElementById("current_type").innerText = "PM2_5";
+
+    // Initialize the main map
+    update_main_map("2013_01_01")
+
     // Curve part is set to analysis mode by default
     button_control(0);
 
-    // var fruits = ["Banana", "Orange", "Apple", "Mango"];
-    // var a = fruits.indexOf("Apples"); // 2
-    //
-    // console.log(a);
+    // News part is set to news mode by default
+    news_button_control(0);
+
+    // Plot histogram
+    update_histogram();
+
+    // Plot wind direction
+    update_wind_direction();
+
+    // Plot weather amount
+    update_whether_amount();
+
+    // Plot pollution amount, query database, sleep for a while in case that the conflict on querying the database
+    setTimeout(function(){
+        update_pollution_amount();
+    }, 200);
+
 </script>
 
 </html>

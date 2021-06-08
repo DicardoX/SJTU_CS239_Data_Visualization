@@ -42,8 +42,8 @@ function button_control(chosen_type) {
         document.getElementById("curve_button_2").style.color = "#1950c4";
         global_button_choice = 0;
 
-        let curve_chart = echarts.init($('.bar')[0]);
-        curve_chart.clear();
+        let my_curve_chart = echarts.init($('.bar')[0]);
+        my_curve_chart.clear();
         plot_analysis_curve();
 
     }
@@ -52,8 +52,8 @@ function button_control(chosen_type) {
         document.getElementById("curve_button_1").style.color = "#1950c4";
         global_button_choice = 1;
 
-        let curve_chart = echarts.init($('.bar')[0]);
-        curve_chart.clear();
+        let my_curve_chart = echarts.init($('.bar')[0]);
+        my_curve_chart.clear();
         update_predicted_curve(cur_city_name, cur_target_type);
     }
 }
@@ -117,127 +117,129 @@ function update_predicted_curve(city_name, target_type) {
 
 // 绘制分析曲线
 function plot_analysis_curve() {
-    // 中间省略的数据  准备三项
-    const item = {
-        name: '',
-        value: 1200,
-        // 柱子颜色
-        itemStyle: {
-            color: '#254065'
-        },
-        // 鼠标经过柱子颜色
-        emphasis: {
-            itemStyle: {
-                color: '#254065'
-            }
-        },
-        // 工具提示隐藏
-        tooltip: {
-            extraCssText: 'opacity:0'
-        }
-    };
-    option = {
-        // 工具提示
-        tooltip: {
-            // 触发类型  经过轴触发axis  经过轴触发item
-            trigger: 'item',
-            // 轴触发提示才有效
-            axisPointer: {
-                // 默认为直线，可选为：'line' 线效果 | 'shadow' 阴影效果
-                type: 'shadow'
-            }
-        },
-        // 图表边界控制
-        grid: {
-            // 距离 上右下左 的距离
-            left: '0',
-            right: '3%',
-            bottom: '3%',
-            top: '5%',
-            // 大小是否包含文本【类似于boxsizing】
-            containLabel: true,
-            //显示边框
-            show: true,
-            //边框颜色
-            borderColor: 'rgba(0, 240, 255, 0.3)'
-        },
-        // 控制x轴
-        xAxis: [
+    let my_curve_chart = echarts.init($('.bar')[0]);
+    //在这里载入文件，还需要修改
+    var ROOT_PATH = '../static/json/weather_json/syData.json';
+    console.log(ROOT_PATH)
+    $.get(ROOT_PATH, function (_rawData) {
+      run(_rawData);
+    });
+    function run(_rawData) {
+      //这里选择要画几种污染物
+      var pollutions = ['PM2.5','O3', 'PM10','SO2','NO2','CO'];
+      var datasetWithFilters = [];
+      var seriesList = [];
+      echarts.util.each(pollutions, function (pollution) {
+          var datasetId = 'dataset_' + pollution;
+          datasetWithFilters.push({
+              id: datasetId,
+              fromDatasetId: 'dataset_raw',
+              transform: {
+                  type: 'filter',
+                  config: {
+                      and: [
+                        //这里选择时间范围
+                          { dimension: 'date', gte: 2000 },
+                          { dimension: 'pollution_type', '=': pollution}
+                      ]
+                  }
+              }
+          });
+          seriesList.push({
+              type: 'line',
+              smooth: true,
+              datasetId: datasetId,
+              showSymbol: false,
+              name: pollution,
+              /* endLabel: {
+                  show: false,
+                  formatter: function (params) {
+                      return params.value[0] + ': ' + params.value[2];
+                  },
+                  color: '#ffffff',
+              }, */
+              labelLayout: {
+                  moveOverlap: 'shiftY'
+              },
+              emphasis: {
+                  focus: 'series'
+              },
+              encode: {
+                  x: 'date',
+                  y: 'relative_value',
+                  label: ['pollution_type', 'relative_value'],
+                  itemName: 'date',
+                  tooltip: ['relative_value'],
+              }
+          });
+      });
+
+      let option = {
+          animationDuration: 5000,
+          dataset: [{
+              id: 'dataset_raw',
+              source: _rawData
+          }].concat(datasetWithFilters),
+          tooltip: {
+              order: 'valueDesc',
+              trigger: 'axis'
+          },
+          dataZoom: [
             {
-                // 使用类目，必须有data属性
-                type: 'category',
-                // 使用 data 中的数据设为刻度文字
-                data: ['上海', '广州', '北京', '深圳', '合肥', '', '......', '', '杭州', '厦门', '济南', '成都', '重庆'],
-                // 刻度设置
-                axisTick: {
-                    // true意思：图形在刻度中间
-                    // false意思：图形在刻度之间
-                    alignWithLabel: false,
-                    show: false
+              type: 'slider',
+              xAxisIndex: 0
+            },
+            {
+              type: 'inside',
+              yAxisIndex: 0
+            }
+          ],
+          xAxis: {
+              type: 'category',
+              nameLocation: 'middle',
+              axisTick: {
+                show: false//去除刻度线
                 },
-                //文字
                 axisLabel: {
-                    color: '#4c9bfd'
-                }
-            }
-        ],
-        // 控制y轴
-        yAxis: [
-            {
-                // 使用数据的值设为刻度文字
-                type: 'value',
-                axisTick: {
-                    // true意思：图形在刻度中间
-                    // false意思：图形在刻度之间
-                    alignWithLabel: false,
-                    show: false
+                    color: '#4c9bfd'//文本颜色
                 },
-                //文字
-                axisLabel: {
-                    color: '#4c9bfd'
+                axisLine: {
+                    show: false//去除轴线
                 },
-                splitLine: {
-                    lineStyle: {
-                        color: 'rgba(0, 240, 255, 0.3)'
-                    }
-                },
-            }
-        ],
-        // 控制x轴
-        series: [
-            {
-                // series配置
-                // 颜色
-                itemStyle: {
-                    // 提供的工具函数生成渐变颜色
-                    color: new echarts.graphic.LinearGradient(
-                        // (x1,y2) 点到点 (x2,y2) 之间进行渐变
-                        0, 0, 0, 1,
-                        [
-                            { offset: 0, color: '#00fffb' }, // 0 起始颜色
-                            { offset: 1, color: '#0061ce' }  // 1 结束颜色
-                        ]
-                    )
-                },
-                // 图表数据名称
-                name: '用户统计',
-                // 图表类型
-                type: 'bar',
-                // 柱子宽度
-                barWidth: '60%',
-                // 数据
-                data: [2100, 1900, 1700, 1560, 1400, item, item, item, 900, 750, 600, 480, 240]
-            }
-        ]
-    };
-    // const myechart = echarts.init($('.users .bar')[0]);
-    let curve_chart = echarts.init($('.bar')[0]);                                                          // Modified
-    curve_chart.setOption(option);
+                boundaryGap: false//去除轴内间距
+          },
+          yAxis: {
+              // 数据作为刻度文字
+              type: 'value',
+              name: 'mg/m^3',
+              nameTextStyle: {
+                color: '#4c9bfd'
+              },
+              axisTick: {
+                  show: false//去除刻度线
+              },
+              axisLabel: {
+                  color: '#4c9bfd'//文本颜色
+              },
+              axisLine: {
+                  show: false//去除轴线
+              },
+              boundaryGap: false//去除轴内间距
+            },
+          grid: {
+              top: 35,
+              bottom: 40
+          },
+          series: seriesList
+      };
+
+      my_curve_chart.setOption(option);
+  }
 }
 
 // 绘制预测曲线
 function plot_predicted_curve(days_data, AQIs, IAQIs) {
-    option = {
+    let option = {
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -366,7 +368,6 @@ function plot_predicted_curve(days_data, AQIs, IAQIs) {
           },
         ],
       };
-    // const myechart = echarts.init($('.users .bar')[0]);
-    let curve_chart = echarts.init($('.bar')[0]);                                                            // Modified
-    curve_chart.setOption(option);
+    let my_curve_chart = echarts.init($('.bar')[0]);                                                            // Modified
+    my_curve_chart.setOption(option);
 }

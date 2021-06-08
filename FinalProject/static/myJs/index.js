@@ -24,41 +24,6 @@
     }
 })();
 
-(function () {
-    //事件委托
-    $('.monitor').on('click', ' a', function () {
-        //点击当前的a 加类名 active  他的兄弟删除类名
-        $(this).addClass('active').siblings().removeClass('active');
-        //获取一一对应的下标
-        var index = $(this).index();
-        //选取content 然后狗日对应下标的 显示   当前的兄弟.content隐藏
-        $('.content').eq(index).show().siblings('.content').hide();
-    });
-
-    $.ajax({
-        type : "GET",
-        url : "../static/myJs/client_database/news_json/北京.json",
-        data : {
-            method : "query"
-        },
-        dataType : "json",//返回的数据类型
-
-        success : function(data) {
-
-            var html = '';
-            for ( var i = 0; i < data.length; i++) {//循环json对象，拼接tr,td的html
-                // console.log(data[i]);
-                html = html + "<div class='row'><span class='col'><img border='0' src='../static/myJs/images/news" + String(i%3+2) + ".jpeg'  width='100' height='70'></span><a class='col' href='https://sthj.sh.gov.cn" + data[i].link + "'>" + data[i].title + "</a ><span class='icon-dot'></span></div>";
-            }
-            $('.marquee').html(html);//通过jquery方式获取table，并把tr,td的html输出到table中
-        },
-        error : function() {
-            alert("查询失败！");
-        }
-    });
-
-})();
-
 //订单
 (function () {
     var data = {

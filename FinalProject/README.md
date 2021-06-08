@@ -73,7 +73,56 @@
 
         - 在 *MySQL* 数据库中添加了每个城市特定日期内各种污染物的 *IAQI*
 
+- *2021.6.7*：
 
+    - 添加了全局数据的更改，添加了系统元件之间的联动，实时访问数据库更新全局变量，为各元件的更新同步打下基础；
+    - 添加了新闻板块的按钮切换及版面展示，以实现新闻模块和分析模块的复用；
+    - 添加了主地图与数据库的实时联动和更新；
+
+- *2021.6.8*：
+
+    - 修复了加入地图缩放后的后台 *bug* 以及由此导致的显示 *bug*，原因是该部分文件中绘图时的 *option* 为全局变量，会影响到其系统中的其他部分； 
+    - 修复了数据库频繁访问导致的后端报错 `pymysql.err.InterfaceError: (0, '')` 以及前端报错 `Error 500` 数据库连接断开，原因是在本来的方案里，在 `app.py` 运行的过程中仅在最开始建立数据库连接，在 `app.py` 运行结束后断开连接，即主函数如下：
+
+    ```python
+    if __name__ == '__main__':
+        # Establish database connection
+        db_connection = pymysql.connect(**config)
+        # Create cursor
+        cursor = db_connection.cursor()
+    
+        # Run server
+        app.run()
+    
+        # Close database connection
+        db_connection.close()
+    ```
+
+    ​	现在修改为在每一次访问数据库的时候都重新建立连接，在该次访问结束后关闭该连接。
+
+    ```python
+    # Query from table
+    def query_from_table(my_table_name, my_targets, my_operators, my_amounts):
+        # Establish database connection
+        db_connection = pymysql.connect(**config)
+        # Create cursor
+        cursor = db_connection.cursor()
+        sql = """SELECT * FROM %s
+                 WHERE """ % my_table_name
+       	# (...)
+        try:
+            cursor.execute(sql)
+            m_results = cursor.fetchall()
+            # Close database connection
+            db_connection.close()
+            return m_results
+        except SyntaxError as e:
+            # Close database connection
+            db_connection.close()
+            return ()
+    ```
+
+    - 
 
 --------
 
