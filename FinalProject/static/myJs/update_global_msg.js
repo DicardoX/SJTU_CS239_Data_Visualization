@@ -8,10 +8,10 @@ function update_global_city(city_name) {
     // Update curve module
     change_curve_info(0);
 
-    // Update pollution amount module
-    setTimeout(function(){
-        update_pollution_amount();
-    }, 200);
+    // // Update pollution amount module
+    // setTimeout(function(){
+    update_pollution_amount();
+    // }, 200);
 
     // Update news module
     update_news_area_name(city_name);
@@ -34,9 +34,9 @@ function update_global_date() {
     update_main_map(date);
 
     // Plot pollution amount, query database, sleep for a while in case that the conflict on querying the database
-    setTimeout(function(){
-        update_pollution_amount();
-        }, 200);
+    // setTimeout(function(){
+    update_pollution_amount();
+        // }, 200);
 }
 
 // Update global type by selecting in the global type selector

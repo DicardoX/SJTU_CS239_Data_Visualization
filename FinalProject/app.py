@@ -118,8 +118,6 @@ def query_city_based_AQI(my_targets, my_operators, my_amounts):
     #       (table_name, str(my_targets), str(my_operators), str(my_amounts)))
     m_results = query_from_table(table_name, my_targets, my_operators, my_amounts)
 
-    print(m_results)
-
     return m_results
 
 
@@ -146,8 +144,6 @@ def read_csv(file_path):
 app = Flask(__name__)
 # 环境设置
 app.config.from_object(settings)
-# 读入csv文件
-file = read_csv("./static/data/hotel.csv")
 
 # 预测总天数
 predicted_days_num = 7
@@ -158,15 +154,6 @@ target_list = ["PM2_5", "PM10", "SO2", "NO2", "CO", "O3", "U", "V", "TEMP", "RH"
 @app.route('/')
 def index():
     return render_template("index.html")
-
-
-# # 更新表格
-# def update_table(table):
-#     ret = {}
-#
-#     # 保存文件，将dict转化为dataframe格式，再使用to_csv进行转化
-#     ret = pd.DataFrame(ret)
-#     ret.to_csv(r"./output.csv")
 
 
 @app.route('/server_update_predicted_curve', methods=['POST'])
@@ -284,10 +271,9 @@ def update_pollution_amount():
 @app.route('/server_set_word_cloud', methods=['POST'])
 def update_word_cloud():
     city_name = request.get_json()['city_name']
-    print(city_name)
     word_cloud_data = []
     # print(myres[0]["content"])
-    with codecs.open("static/json/news_txt/"+city_name+".txt", 'r', 'utf8') as f:
+    with codecs.open("static/client_database/txt/news_txt/"+city_name+".txt", 'r', 'utf8') as f:
         txt = f.read()
     f.close()
     jieba.enable_paddle()
@@ -322,18 +308,9 @@ def update_word_cloud():
             })
 
     res = {"result": word_cloud_data}
-    # 使用flask内的jsonify函数来将res封装称json文件
     return jsonify(res)
 
 
 if __name__ == '__main__':
-    # # Establish database connection
-    # db_connection = pymysql.connect(**config)
-    # # Create cursor
-    # cursor = db_connection.cursor()
-
     # Run server
     app.run()
-
-    # # Close database connection
-    # db_connection.close()

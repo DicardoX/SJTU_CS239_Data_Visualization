@@ -227,20 +227,15 @@
                     </div>
                 </div>
             </div>
-<!--            &lt;!&ndash; 排行榜 &ndash;&gt;-->
-<!--            <div class="top panel">-->
-<!--                <div class="inner">-->
-<!--                    <h3> () </h3>-->
-<!--                </div>-->
-<!--            </div>-->
         </div>
     </div>
 </body>
-<script src="../static/myJs/jquery.min.js"></script>
-<script src="../static/myJs/echarts.min.js"></script>
-<script src="../static/myJs/d3.v6.min.js"></script>
+<script src="../static/myJs/JSLib/jquery.min.js"></script>
+<script src="../static/myJs/JSLib/echarts.min.js"></script>
+<script src="../static/myJs/JSLib/d3.v6.min.js"></script>
+<script src="../static/myJs/JSLib/echarts-wordcloud.js"></script>
+
 <script src="../static/myJs/word_cloud.js"></script>
-<script src="../static/myJs/echarts-wordcloud.js"></script>
 <script src="../static/myJs/index.js"></script>
 <script src="../static/myJs/multi_curve.js"></script>
 <script src="../static/myJs/histogram.js"></script>
@@ -249,7 +244,6 @@
 <script src="../static/myJs/wind_direction.js"></script>
 <script src="../static/myJs/weather_amount.js"></script>
 <script src="../static/myJs/pollution_amount.js"></script>
-
 <script src="../static/myJs/china.js"></script>
 <script src="../static/myJs/main_map.js"></script>
 <script src="../static/myJs/news_display.js"></script>
@@ -279,9 +273,10 @@
     update_whether_amount();
 
     // Plot pollution amount, query database, sleep for a while in case that the conflict on querying the database
-    setTimeout(function(){
-        update_pollution_amount();
-    }, 200);
+    // Not need after fixing the bug on the build of connection to database!
+    // setTimeout(function(){
+    update_pollution_amount();
+    // }, 200);
 
 </script>
 

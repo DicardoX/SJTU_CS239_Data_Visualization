@@ -1,7 +1,7 @@
-
+// word_cloud.js
 
 function set_word_cloud(params_name) {
-    console.log("word_cloud");
+    // console.log("word_cloud");
 
     var xhr = new XMLHttpRequest();
     // true，即异步执行，如果为false，则会阻塞直到数据返回
@@ -23,7 +23,7 @@ function set_word_cloud(params_name) {
             //console.log(xhr.responseText);
             // 成功返回，xhr.responseText格式为json文件，需要parse解析
             let word_cloud_data = JSON.parse(xhr.responseText).result;
-            console.log(word_cloud_data);
+            // console.log(word_cloud_data);
             //console.log(word_cloud_data);
             let dom1 = document.getElementById("word_cloud_container");
     //console.log(dom1);

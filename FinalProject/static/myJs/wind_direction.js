@@ -7,7 +7,7 @@ function update_wind_direction() {
     var myechart = echarts.init(document.getElementById("wind-graph"));
     var option;
 
-    d3.csv("../static/csv/syWindFre.csv",function(csvdata){
+    d3.csv("../static/client_database/csv/syWindFre.csv",function(csvdata){
         return csvdata;
         }).then(function (data) {
             syData = data;

@@ -239,8 +239,6 @@ function plot_main_map(LIData, MIData, HEData) {
                     curveness: 0.2
                 }
             },
-
-            // data: convertData(item[1])
         }, {
             name: item[0],
             type: 'effectScatter',
@@ -297,8 +295,6 @@ function plot_main_map(LIData, MIData, HEData) {
                     curveness: 0.2
                 }
             },
-
-            // data: convertData(item[1])
         }, {
             name: item[0],
             type: 'effectScatter',
@@ -411,25 +407,19 @@ function plot_main_map(LIData, MIData, HEData) {
         }
         // If in observed city name
         if(observed_city_name.indexOf(params_name) !== -1) {
-            // console.log(params_name);
-
             // Update current city name
             // setTimeout(function(){
             update_global_city(params_name);
             // }, 200);
 
-
-        } else {
-            // Provinces or other areas
         }
-
     });
 
     // let firstzoom = 2;
     let firstzoom = option.geo.zoom;
 
     if(typeof(option.geo) != "undefined") {
-        console.log("Not undefined!");
+        // console.log("Not undefined!");
     }
 
     myecharts.on('georoam', function(params) {
@@ -453,18 +443,6 @@ function plot_main_map(LIData, MIData, HEData) {
                 option.series = series;
             }
         }
-        // if (zoom >= 8) {
-        //     // 当缩放等级大于等于8的时候
-        //     // 可以配置你需要的操作
-        //     console.log('缩放等级大于等于8了');
-        // }
-        // else {
-        //      // 当缩放等级小于8的时候
-        //     // 可以配置你需要的操作
-        //     console.log('缩放等级小于8了');
-        // }
-
-        // this.chart.clear();
         myecharts.setOption(option);
     })
 }

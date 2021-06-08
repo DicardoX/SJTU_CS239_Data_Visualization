@@ -119,8 +119,7 @@ function update_predicted_curve(city_name, target_type) {
 function plot_analysis_curve() {
     let my_curve_chart = echarts.init($('.bar')[0]);
     //在这里载入文件，还需要修改
-    var ROOT_PATH = '../static/json/weather_json/syData.json';
-    console.log(ROOT_PATH)
+    var ROOT_PATH = '../static/client_database/json/weather_json/syData.json';
     $.get(ROOT_PATH, function (_rawData) {
       run(_rawData);
     });

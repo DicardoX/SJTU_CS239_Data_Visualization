@@ -68,7 +68,7 @@ function set_news(area_name) {
 
     $.ajax({
         type : "GET",
-        url : "../static/json/news_json/" + String(area_name) +".json",
+        url : "../static/client_database/json/news_json/" + String(area_name) +".json",
         data : {
             method : "query"
         },
@@ -78,7 +78,7 @@ function set_news(area_name) {
 
             var html = '';
             for ( var i = 0; i < data.length; i++) {//循环json对象，拼接tr,td的html
-                html = html + "<div class='row'><span class='col'><img border='0' src='../static/myJs/images/news" + String(i%3+2) + ".jpeg'  width='100' height='70'></span><a class='col' href='https://sthj.sh.gov.cn" + data[i].link + "'>" + data[i].title + "</a ><span class='icon-dot'></span></div>";
+                html = html + "<div class='row'><span class='col'><img border='0' src='../static/images/news" + String(i%3+2) + ".jpeg'  width='100' height='70'></span><a class='col' href='https://sthj.sh.gov.cn" + data[i].link + "'>" + data[i].title + "</a ><span class='icon-dot'></span></div>";
             }
             $('.marquee').html(html);//通过jquery方式获取table，并把tr,td的html输出到table中
         },
