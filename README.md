@@ -1,4 +1,4 @@
-# CS239 Data Visualization
+# SJTU CS239 Data Visualization
 
 ---------------
 
