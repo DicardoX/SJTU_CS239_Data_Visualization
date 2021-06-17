@@ -4,9 +4,11 @@ import settings
 import pymysql
 import codecs
 import jieba
+import time
 import json
 import jieba.posseg as pseg
 from collections import Counter
+import math
 import os
 
 
@@ -94,6 +96,18 @@ def query_from_table(my_table_name, my_targets, my_operators, my_amounts):
         db_connection.close()
         return ()
         # print("Error occurred when fetching data from database...")
+
+
+# Query for central location
+def query_central_location(my_targets, my_operators, my_amounts):
+    if not (len(my_targets) == len(my_operators) == len(my_amounts) and len(my_targets) > 0):
+        print("Error occurred when checking the length of list, please confirm the input...")
+        return ()
+    table_name = "central_location"
+    print("Querying table: %s | Targets: %s | Operators: %s | Amounts: %s" %
+          (table_name, str(my_targets), str(my_operators), str(my_amounts)))
+    m_results = query_from_table(table_name, my_targets, my_operators, my_amounts)
+    return m_results
 
 
 # Query for city features
@@ -250,7 +264,6 @@ def update_pollution_amount():
         # 从mysql数据库获取AQI数据，共90个城市，根据date查询的效率最高
         targets, operators, amounts = ["date", "city_name"], ['=', '='], [date, city_name + "市"]
         results = query_city_based_IAQI(my_targets=targets, my_operators=operators, my_amounts=amounts)
-        print(results)
         if len(results) > 0:
             # print(results)
             city_name = results[0][0].replace("市", "")
@@ -272,7 +285,6 @@ def update_pollution_amount():
 def update_word_cloud():
     city_name = request.get_json()['city_name']
     word_cloud_data = []
-    # print(myres[0]["content"])
     with codecs.open("static/client_database/txt/news_txt/"+city_name+".txt", 'r', 'utf8') as f:
         txt = f.read()
     f.close()
@@ -284,7 +296,6 @@ def update_word_cloud():
             continue
         if len(x) > 1 and x != '\r\n':
             c[x] += 1
-    print('常用词频度统计结果')
 
     flag = True
     for (k, v) in c.most_common(100):
@@ -300,15 +311,97 @@ def update_word_cloud():
                                         }
                                     }})
             flag = False
-
         else:
             word_cloud_data.append({
                 'name': k,
                 'value': v
             })
-
     res = {"result": word_cloud_data}
     return jsonify(res)
+
+
+@app.route('/server_update_province_3D', methods=['POST'])
+def update_province_3D_info():
+    # 获取JSON
+    target = request.get_json()
+
+    if target.get("Province3DRequest") == 1:  # 初始化请求
+        print("Request received for updating province 3D!")
+
+        date = target.get("Date")
+        city_name_list = target.get("City_name_list")
+
+        print("Date:", date, " | City name list:", city_name_list)
+
+        AQI_dict = {}
+        # 从mysql数据库获取AQI数据，共90个城市，根据date查询的效率最高
+        for city_name in city_name_list:
+            # Obtain IAQIs and locations
+            targets, operators, amounts = ["date", "city_name"], ['=', '='], [date, city_name]
+            results = query_city_based_IAQI(my_targets=targets, my_operators=operators, my_amounts=amounts)
+            targets, operators, amounts = ["city_name"], ['='], [city_name]
+            location_results = query_central_location(my_targets=targets, my_operators=operators, my_amounts=amounts)
+            if len(results) > 0 and len(location_results) > 0:
+                city_name = results[0][0].replace("市", "")
+                AQI_list = []
+                # IAQIs
+                for i in range(2, len(results[0]), 1):
+                    AQI_list.append(float(results[0][i]))
+                # Location
+                for i in range(1, len(location_results[0]), 1):
+                    AQI_list.append(location_results[0][i])
+                AQI_dict[city_name] = AQI_list
+            else:
+                print("Error occurred when querying data for main map...")
+        return jsonify(AQI_dict)
+    else:
+        # Do nothing
+        return jsonify({"None": "true"})
+
+
+@app.route('/server_update_weather_amount', methods=['POST'])
+def update_weather_amount():
+    # 获取JSON
+    target = request.get_json()
+
+    if target.get("WeatherAmountRequest") == 1:  # 初始化请求
+        print("Request received for updating weather amount!")
+
+        cur_year = target.get("Current_year")
+        city_name = target.get("City_name") + "市"
+
+        print("Year:", cur_year, " | City name:", city_name)
+
+        n_days_in_months = [0 for i in range(12)]
+        AQI_dict = {"wind_speed": [0 for i in range(12)], "temp": [0 for i in range(12)], "rh": [0 for i in range(12)], "psfc": [0 for i in range(12)]}
+        start_date = str(int(cur_year) - 1) + "_12_31"
+        end_date = str(int(cur_year) + 1) + "_01_01"
+
+        targets, operators, amounts = ["date", "date", "city_name"], ['>', '<', '='], [start_date, end_date, city_name]
+        results = query_city_features(my_targets=targets, my_operators=operators, my_amounts=amounts)
+        if len(results) > 0:
+            # Calculate average value
+            for message in results:
+                # Get month
+                month = int(message[1][5:7])
+                # Update days
+                n_days_in_months[month - 1] += 1
+                # Update AQI_dict
+                AQI_dict["wind_speed"][month - 1] += math.sqrt(pow(float(message[8]), 2) + pow(float(message[9]), 2))
+                AQI_dict["temp"][month - 1] += (float(message[10]) - 273.15)
+                AQI_dict["rh"][month - 1] += float(message[11])
+                AQI_dict["psfc"][month - 1] += float(message[12])
+            for i in range(len(n_days_in_months)):
+                AQI_dict["wind_speed"][i] /= float(n_days_in_months[i])
+                AQI_dict["temp"][i] /= float(n_days_in_months[i])
+                AQI_dict["rh"][i] /= float(n_days_in_months[i])
+                AQI_dict["psfc"][i] /= float(n_days_in_months[i])
+        else:
+            print("Error occurred when querying data for weather amount...")
+        return jsonify(AQI_dict)
+    else:
+        # Do nothing
+        return jsonify({"None": "true"})
 
 
 if __name__ == '__main__':

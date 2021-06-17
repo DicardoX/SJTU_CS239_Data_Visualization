@@ -4,7 +4,8 @@ body{
     margin: 0;
     padding: 0;
     background-repeat: no-repeat;
-    background-position: 0 0 / cover;
+    /*background-position: 0 0 / cover;*/
+    background-position: center;
     background-color: #101129;
 }
 .labels {
@@ -139,9 +140,9 @@ button:hover::after {
 /* -------------------- Pollution Select -------------------------- */
 #pollution_select {
     position: relative;
-    margin-left: -0.4rem;
-    margin-right: 1rem;
-    margin-top: 1rem;
+    /*margin-left: 0.5rem;*/
+    /*margin-right: 1rem;*/
+    /*margin-top: 1rem;*/
     font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
     font-size: 0.5rem;
     color: white;
@@ -312,7 +313,13 @@ button:hover::after {
 	width: 100%; 
 	overflow: hidden;
   }
-  
+  #word_cloud_container {
+      position: absolute;
+      left: 10%;
+      top: 5%;
+      width: 80%;
+      height: 90%;
+  }
   .monitor .row{
 	line-height: 1.05;
 	padding: 0.5rem 1.5rem;
@@ -500,7 +507,7 @@ button:hover::after {
   color: #4c9bfd;
   font-size: 0.667rem;
 }
-/* 销售区域 */
+
 .sales {
   height: 10.333rem;
 }

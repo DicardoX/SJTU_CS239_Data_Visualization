@@ -1,8 +1,25 @@
 // weather_amount.js
 
+let global_current_year = "0";
+let global_current_city = "东京";
 
-// Update weather amount
-function update_whether_amount() {
+// PLot weather amount
+function plot_weather_amount(wind_list, temp_list, rh_list, psfc_list) {
+    //假设可以获取到全年的数据，将其按12个月求平均，得到12个值
+    let avg_temperature, avg_wind_speed, avg_moisture, avg_atmosphere;
+    avg_temperature = temp_list;
+    avg_wind_speed = wind_list;
+    avg_moisture = rh_list;
+    avg_atmosphere = psfc_list;
+
+    //对temp，wind进行归一化成百分数，用于综合面板的展示
+    let max_temp = Math.max(...avg_temperature), max_wind_speed = Math.max(...avg_wind_speed);
+    let norm_temp = Array(12).fill(0), norm_wind_speed = Array(12).fill(0);
+    for(let i=0; i<12; i++){
+        norm_temp[i] = avg_temperature[i]*100/max_temp;
+        norm_wind_speed[i] = avg_wind_speed[i]*100/max_wind_speed;
+    }
+
     var option = {
         //鼠标提示工具
         tooltip: {
@@ -66,7 +83,7 @@ function update_whether_amount() {
         series: [{
             name: '气温',
             // 数据
-            data: [24, 40, 101, 134, 90, 230, 210, 230, 120, 230, 210, 120],
+            data: avg_temperature,
             // 图表类型
             type: 'line',
             // 圆滑连接
@@ -83,16 +100,16 @@ function update_whether_amount() {
     //点击效果
     var data = {
         temprature: [
-            [24, 40, 101, 134, 90, 230, 210, 230, 120, 230, 210, 120]
+            avg_temperature, norm_temp
         ],
         wind_speed: [
-            [23, 75, 12, 97, 21, 67, 98, 21, 43, 64, 76, 38]
+            avg_wind_speed, norm_wind_speed
         ],
         moisture: [
-            [34, 87, 32, 76, 98, 12, 32, 87, 39, 36, 29, 36]
+            avg_moisture
         ],
         atmosphere: [
-            [43, 73, 62, 54, 91, 54, 84, 43, 86, 43, 54, 53]
+            avg_atmosphere
         ]
     }
 	//每种指标的单位不同
@@ -124,8 +141,8 @@ function update_whether_amount() {
         var key = $(this).attr('data-type');
         //根据选中button修改单位
         document.getElementById("unit").innerText = units[key];
-        if(key != "integrate"){
-            var series = [{
+        if(key !== "integrate"){
+            let series = [{
                 name: '气温',
                 // 数据
                 data: [24, 40, 101, 134, 90, 230, 210, 230, 120, 230, 210, 120],
@@ -152,8 +169,8 @@ function update_whether_amount() {
         }
         //开始处理综合情况
         else{
-            var series = [];
-            for(var i=0; i<4; i++){
+            let series = [];
+            for(let i=0; i<4; i++){
                 let tmp_series = {
                     name: '气温',
                     // 数据
@@ -167,7 +184,13 @@ function update_whether_amount() {
                     }
                 };
                 let current_data = data[data_type[i]];
-                tmp_series.data = current_data[0];
+                //获取归一化的数据
+                if(i === 0 || i === 1){
+                    tmp_series.data = current_data[1];
+                }
+                else {
+                    tmp_series.data = current_data[0];
+                }
                 tmp_series.itemStyle.color = color[data_type[i]];
                 tmp_series.name = name[data_type[i]];
                 series.push(tmp_series);
@@ -177,4 +200,53 @@ function update_whether_amount() {
             myechart.setOption(option);
         }
     });
+}
+
+
+// Update weather amount
+function update_weather_amount() {
+    //获取当前城市及时间
+    let current_city = document.getElementById('current_city').innerText;
+    let current_date = document.getElementById('current_date').innerText;
+    let current_year = current_date.slice(0,4);
+
+    if(current_year === global_current_year && current_city === global_current_city) {
+        // console.log("Dont update weather amount info...");
+        return;
+    } else {
+        // console.log("Weather amount info updated!");
+        global_current_year = current_year;
+        global_current_city = current_city;
+    }
+
+    //根据城市与时间获取相关指标
+    let avg_temperature_list, avg_wind_speed_list, avg_moisture_list, avg_atmosphere_list;
+
+    // 生成请求对象
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/server_update_weather_amount", true);
+    // 设置请求头
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.setRequestHeader("kbn-version", "5.3.0");
+    // 发送请求（空白）
+    xhr.send(JSON.stringify({
+        "WeatherAmountRequest": 1,
+        "City_name": current_city,
+        "Current_year": current_year
+    }))
+    // 获取响应
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            let response = JSON.parse(xhr.responseText);
+
+            avg_wind_speed_list = response.wind_speed;
+            avg_temperature_list = response.temp;
+            avg_moisture_list = response.rh;
+            avg_atmosphere_list = response.psfc;
+
+            // 绘制气象指标
+            plot_weather_amount(avg_wind_speed_list, avg_temperature_list, avg_moisture_list, avg_temperature_list)
+        }
+    }
+
 }

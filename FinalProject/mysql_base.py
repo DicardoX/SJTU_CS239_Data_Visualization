@@ -22,7 +22,7 @@ def create_table(my_table_name):
                  CITY_NAME CHAR(20) NOT NULL,
                  LAT FLOAT,
                  LON FLOAT)""" % my_table_name
-    elif my_table_name == "city_features":
+    elif my_table_name == "city_features" or my_table_name == "city_predicted_features":
         sql = """CREATE TABLE %s(
                  CITY_NAME CHAR(20) NOT NULL,
                  DATE CHAR(20) NOT NULL,
@@ -168,7 +168,7 @@ if __name__ == '__main__':
     # table_name = 'central_location'
     # table_name = "city_location_hash_table"
     # table_name = "city_features"
-    table_name = "city_based_IAQI"
+    table_name = "city_predicted_features"
     database_name = "ChinaVis"
     # database_name = "mysql"
 
@@ -189,12 +189,12 @@ if __name__ == '__main__':
     local_dict = get_csv_input(table_name + ".csv")
 
     # Operation 1: table creation
-    # print("Creating table: %s..." % table_name)
-    # create_table(table_name)
+    print("Creating table: %s..." % table_name)
+    create_table(table_name)
 
     # Operation 2: table insert
-    print("Inserting content into table: %s..." % table_name)
-    insert_content_in_table(table_name, local_dict)
+    # print("Inserting content into table: %s..." % table_name)
+    # insert_content_in_table(table_name, local_dict)
 
     # Operation 3: table query
     # target = "city_name"

@@ -118,12 +118,37 @@ function update_predicted_curve(city_name, target_type) {
 // 绘制分析曲线
 function plot_analysis_curve() {
     let my_curve_chart = echarts.init($('.bar')[0]);
+    let current_city = document.getElementById('current_city').innerText;
     //在这里载入文件，还需要修改
-    var ROOT_PATH = '../static/client_database/json/weather_json/syData.json';
+    let ROOT_PATH = '../static/client_database/json/city_pollution_json/' + current_city + '市污染数据.json';
+    let current_date = document.getElementById('current_date').innerText;
+    let current_year = current_date.slice(0,4);
+
     $.get(ROOT_PATH, function (_rawData) {
       run(_rawData);
     });
     function run(_rawData) {
+        //提取rawData中需要的年份数据
+      let small_index=0, large_index=0;
+      //寻找small_index
+      for(let i=1; i<_rawData.length; i++){
+          if(_rawData[i][1].slice(0,4) == current_year){
+              small_index = i;
+              break;
+          }
+      }
+      //寻找large_index
+      for(let i=small_index; i<_rawData.length; i++){
+          if(_rawData[i][1].slice(0,4) != current_year){
+              large_index = i;
+              break;
+          }
+      }
+      if(large_index === 0){
+          large_index = _rawData.length;
+      }
+      //切取
+      _rawData = _rawData.slice(0,1).concat(_rawData.slice(small_index, large_index));
       //这里选择要画几种污染物
       var pollutions = ['PM2.5','O3', 'PM10','SO2','NO2','CO'];
       var datasetWithFilters = [];
@@ -138,7 +163,7 @@ function plot_analysis_curve() {
                   config: {
                       and: [
                         //这里选择时间范围
-                          { dimension: 'date', gte: 2000 },
+                        //{ dimension: 'date', gte: '2018_12_01'},
                           { dimension: 'pollution_type', '=': pollution}
                       ]
                   }
@@ -174,6 +199,15 @@ function plot_analysis_curve() {
       });
 
       let option = {
+          legend: {
+            show: true,
+            orient: 'vertical',
+            top: '10%',
+            right: '0%',
+            textStyle:{
+              color: '#fff'
+            }
+          },
           animationDuration: 5000,
           dataset: [{
               id: 'dataset_raw',
@@ -227,7 +261,8 @@ function plot_analysis_curve() {
             },
           grid: {
               top: 35,
-              bottom: 40
+              bottom: 40,
+              right: 80
           },
           series: seriesList
       };

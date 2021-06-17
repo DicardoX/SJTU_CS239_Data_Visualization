@@ -15,6 +15,22 @@ function update_global_city(city_name) {
 
     // Update news module
     update_news_area_name(city_name);
+
+    // Update province 3D map
+    let date = document.getElementById("current_date").innerText;
+    update_province_3D(date, city_name);
+
+    // Update analysis curve
+    plot_analysis_curve();
+
+    // Update wind info
+    update_wind_direction();
+
+    //Update weather amount
+    update_weather_amount();
+
+    //Update city sort histogram
+    update_histogram();
 }
 
 
@@ -37,6 +53,15 @@ function update_global_date() {
     // setTimeout(function(){
     update_pollution_amount();
         // }, 200);
+
+    // Update weather amount
+    update_weather_amount();
+
+    update_histogram();
+
+    // Update province 3D map
+    let city_name = document.getElementById("current_city").innerText;
+    update_province_3D(date, city_name);
 }
 
 // Update global type by selecting in the global type selector

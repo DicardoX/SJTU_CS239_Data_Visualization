@@ -402,8 +402,9 @@ function plot_main_map(LIData, MIData, HEData) {
 
         // Set news
         set_news(params_name);
-        if(params_name in word_cloud_city_name) {
-            set_word_cloud(params_name);
+
+        if(word_cloud_city_name.indexOf(params_name) !== -1) {
+            // set_word_cloud(params_name);
         }
         // If in observed city name
         if(observed_city_name.indexOf(params_name) !== -1) {

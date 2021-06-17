@@ -43,7 +43,7 @@
                         </span>
                     </div>
                     <div class="item">
-                        <h4><div style="font-size: 1rem; margin-bottom: 0.55rem; alignment: bottom">优</div></h4>
+                        <h4><div id="current_air_level" style="font-size: 1rem; margin-bottom: 0.55rem; alignment: bottom">优</div></h4>
                         <span>
                             <i class="icon-dot" style="color: #ed3f35"></i>
                             空气质量等级
@@ -66,10 +66,10 @@
                             </div>
                         </div>
 
-                        <div class="chart">
-                            <div id="word_cloud_container" class="news_chart">
-                            </div>
-                        </div>
+<!--                        <div class="chart">-->
+<!--                            <div id="word_cloud_container" class="news_chart">-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                     <div class="content">
 
@@ -84,19 +84,19 @@
             <!--点位-->
             <div class="point panel">
                 <div class="inner">
-                    <h3>城市污染柱状图</h3>
+                    <h3 id="province_city_bar">城市污染柱状图</h3>
                     <div class="chart">
                         <div class="histogram"></div>
                         <div class="data">
                             <div class="item">
-                                <h4>南昌</h4>
+                                <h4 id="max_city">南昌</h4>
                                 <span>
                                     <i class="icon-dot" style="color: #ed3f35"></i>
                                     污染最重
                                 </span>
                             </div>
                             <div class="item">
-                                <h4>4九江</h4>
+                                <h4 id="min_city">九江</h4>
                                 <span>
                                     <i class="icon-dot" style="color: #eacf19"></i>
                                     污染最轻
@@ -140,21 +140,30 @@
 <!--                        <input type="button" class="curve_button" name="area" value="Area" onclick="" />-->
                         <button id="curve_button_1" onclick="button_control(0)"> 污染分析</button>
                         <button id="curve_button_2" onclick="button_control(1)"> 污染预测 </button>
-                    </div>
-                    <div class="chart">
-                        <div class="bar" id="cur_chart"></div>
-                        <div id="select_border">
-                            <select id="pollution_select" onchange="change_curve_info(1)">
-                                <option value="" disabled selected>污染物类型</option>
-                                <option value="PM2_5">PM2.5</option>
-                                <option value="PM10">PM10</option>
-                                <option value="SO2">SO2</option>
-                                <option value="NO2">NO2</option>
-                                <option value="CO">CO</option>
-                                <option value="O3">O3</option>
-                            </select>
 
-                        </div>
+                        <select id="pollution_select" onchange="change_curve_info(1)">
+                        <option value="" disabled selected>污染物类型</option>
+                        <option value="PM2_5">PM2.5</option>
+                        <option value="PM10">PM10</option>
+                        <option value="SO2">SO2</option>
+                        <option value="NO2">NO2</option>
+                        <option value="CO">CO</option>
+                        <option value="O3">O3</option>
+                    </select>
+                    </div>
+                    <div class="chart" style="margin-top: 0.2rem; margin-left: 0.5rem">
+                        <div class="bar" id="cur_chart"></div>
+<!--                        <div id="select_border">-->
+<!--                            <select id="pollution_select" onchange="change_curve_info(1)">-->
+<!--                                <option value="" disabled selected>污染物类型</option>-->
+<!--                                <option value="PM2_5">PM2.5</option>-->
+<!--                                <option value="PM10">PM10</option>-->
+<!--                                <option value="SO2">SO2</option>-->
+<!--                                <option value="NO2">NO2</option>-->
+<!--                                <option value="CO">CO</option>-->
+<!--                                <option value="O3">O3</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -169,7 +178,7 @@
             </div>
             <!-- 渠道 季度 -->
             <div class="wrap">
-                                <div class="channel panel">
+                <div class="channel panel">
                     <div class="inner">
                         <h3>污染指标</h3>
                         <div class="data">
@@ -234,6 +243,8 @@
 <script src="../static/myJs/JSLib/echarts.min.js"></script>
 <script src="../static/myJs/JSLib/d3.v6.min.js"></script>
 <script src="../static/myJs/JSLib/echarts-wordcloud.js"></script>
+<script src="../static/myJs/JSLib/bmap.min.js"></script>
+<script src="../static/myJs/JSLib/echarts-gl.min.js"></script>
 
 <script src="../static/myJs/word_cloud.js"></script>
 <script src="../static/myJs/index.js"></script>
@@ -247,6 +258,7 @@
 <script src="../static/myJs/china.js"></script>
 <script src="../static/myJs/main_map.js"></script>
 <script src="../static/myJs/news_display.js"></script>
+<script src="../static/myJs/province_3D.js"></script>
 
 <script>
     // Set initial global msg
@@ -270,13 +282,20 @@
     update_wind_direction();
 
     // Plot weather amount
-    update_whether_amount();
+    update_weather_amount();
 
     // Plot pollution amount, query database, sleep for a while in case that the conflict on querying the database
     // Not need after fixing the bug on the build of connection to database!
     // setTimeout(function(){
     update_pollution_amount();
     // }, 200);
+
+
+
+    // Draw 3D province
+    let init_date = document.getElementById("current_date").innerText;
+    let init_city_name = document.getElementById("current_city").innerText;
+    update_province_3D(init_date, init_city_name);
 
 </script>
 

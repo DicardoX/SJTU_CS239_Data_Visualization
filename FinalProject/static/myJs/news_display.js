@@ -2,18 +2,23 @@
 
 let has_news_area = ["上海", "北京", "四川", "山西", "新疆", "河北"];
 
-let cur_news_area_name = "北京";
-
 // let word_cloud_city_name = ["上海"];
 
 // 0 for news part, 1 for word cloud part
 let cur_news_module_state = 0;
 
+let cur_news_area_name = "北京";
+
 
 // Draw news analysis pictures
 function draw_news_analysis_pics() {
     console.log("Draw news analysis pics...");
-    if(cur_news_area_name in word_cloud_city_name) {
+
+    // console.log(cur_news_area_name);
+    // console.log(has_news_area);
+
+    if(has_news_area.indexOf(cur_news_area_name) !== -1) {
+        console.log("Draw news analysis pics...");
         set_word_cloud(cur_news_area_name);
     }
 }
@@ -21,9 +26,11 @@ function draw_news_analysis_pics() {
 
 // Update news area name
 function update_news_area_name(area_name) {
-    if(area_name in has_news_area) {
+    if(has_news_area.indexOf(area_name) !== -1) {
         cur_news_area_name = area_name;
     }
+    // console.log(cur_news_area_name);
+    news_button_control(cur_news_module_state);
 }
 
 // News button control
@@ -32,12 +39,12 @@ function news_button_control(type) {
     if(type === 0) {
         document.getElementById("news_button_1").style.color = "white";
         document.getElementById("news_button_2").style.color = "#1950c4";
-
+    $('.content').html("<div class=\"marquee-view\">\n" +
+        "                            <div class=\"marquee\">\n" +
+        "\n" +
+        "                            </div>\n" +
+        "                        </div>");
         cur_news_module_state = 0;
-
-        let news_chart = echarts.init($('.news_chart')[0]);
-        news_chart.clear();
-
         set_news(cur_news_area_name);
 
 
@@ -48,7 +55,10 @@ function news_button_control(type) {
         cur_news_module_state = 1;
 
         // Analysis
-        $('.marquee').html("");//通过jquery方式获取table，并把tr,td的html输出到table中
+        $('.content').html("<div class=\'chart\'>\n" +
+            "      <div id=\"word_cloud_container\" class=\"news_chart\">\n" +
+            "                            </div>\n" +
+            "                        </div>");//通过jquery方式获取table，并把tr,td的html输出到table中
 
         draw_news_analysis_pics();
     }

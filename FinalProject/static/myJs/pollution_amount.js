@@ -67,7 +67,6 @@ function update_pollution_amount() {
             let response = JSON.parse(xhr.responseText)
 
             let AQI_list = [];
-            // console.log(Object.keys(response)) // "北京"
             // 访问Object内的元素
             for(let key in response) {
                 AQI_list.push(response[key]);
@@ -78,6 +77,9 @@ function update_pollution_amount() {
 
             let max_type = pollution_type_list[max_elm_index];
             let sec_max_type = pollution_type_list[sec_elm_index];
+
+            // Update air level header
+            update_current_air_level(AQI_list[0][max_elm_index]);
 
             // Set the elms in html
             set_pollution_amount(max_type, AQI_list[0][max_elm_index], sec_max_type, AQI_list[0][sec_elm_index]);
